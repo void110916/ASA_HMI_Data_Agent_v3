@@ -1,0 +1,15 @@
+{
+    "cmake.configureOnOpen": true,
+    "cmake.configureSettings": {
+        "CMAKE_PREFIX_PATH": "${env:HOME}/Qt/6.2.4/gcc_64/",
+        "ENABLE_FEATURE": "1",
+        "ENABLE_OTHER_FEATURE": "0",
+        "symbolSearchPath": "${env:HOME}/Qt/6.2.4/gcc_64/bin"
+    },
+    "files.associations": {
+        "qapplication": "cpp"
+    },
+    	
+
+
+}
