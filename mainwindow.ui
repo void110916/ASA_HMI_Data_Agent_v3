@@ -17,7 +17,7 @@
    <locale language="Chinese" country="Taiwan"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="portButton">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -30,7 +30,7 @@
      <string>On</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="portComboBox">
     <property name="geometry">
      <rect>
       <x>60</x>

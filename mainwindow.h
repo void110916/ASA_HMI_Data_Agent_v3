@@ -2,20 +2,26 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+  Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+ public:
+  MainWindow(QWidget *parent = nullptr);
+  ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
+ private slots:
+  void on_pushButton_clicked();
+
+ private:
+  Ui::MainWindow *ui;
+  QSerialPort serial;
 };
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

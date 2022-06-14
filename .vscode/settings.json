@@ -7,7 +7,10 @@
         "symbolSearchPath": "${env:HOME}/Qt/6.2.4/gcc_64/bin"
     },
     "files.associations": {
-        "qapplication": "cpp"
+        "qapplication": "cpp",
+        "qtserialport": "cpp",
+        "qserialportinfo": "cpp",
+        "new": "cpp"
     },
     	
 
