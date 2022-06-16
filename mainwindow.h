@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
+#include <QtWidgets>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -18,10 +20,15 @@ class MainWindow : public QMainWindow {
   ~MainWindow();
 
  private slots:
-  void on_pushButton_clicked();
+  void on_portButton_clicked();
+  void on_portComboBox_popup_showing();
 
  private:
   Ui::MainWindow *ui;
-  QSerialPort serial;
+  QSerialPort *serial;
+
+  bool serialOn(QSerialPort *&serial);
+  bool serialOff(QSerialPort *&serial);
+  void serialRecv(void);
 };
 #endif  // MAINWINDOW_H

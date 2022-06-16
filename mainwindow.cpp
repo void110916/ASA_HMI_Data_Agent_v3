@@ -1,16 +1,65 @@
 #include "mainwindow.h"
 
 #include "./ui_mainwindow.h"
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
   auto portlist = QSerialPortInfo::availablePorts();
-
+  connect(ui->portComboBox, SIGNAL(popupShowing()), this,
+          SLOT(on_portComboBox_popup_showing()));
   for (auto port : portlist) ui->portComboBox->addItem(port.portName(), 0);
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::on_pushButton_clicked() {}
+void MainWindow::on_portButton_clicked() {
+  static bool isOn = false;
+  if (!isOn)
+    isOn = serialOn(this->serial);
+  else
+    isOn = serialOff(this->serial);
+}
+
+bool MainWindow::serialOn(QSerialPort *&serial) {
+  serial = new QSerialPort(ui->portComboBox->currentText(),this);
+  serial->setBaudRate(QSerialPort::Baud115200);
+  serial->setParity(QSerialPort::NoParity);
+  serial->setDataBits(QSerialPort::Data8);
+  serial->setStopBits(QSerialPort::OneStop);
+  serial->setReadBufferSize(500);
+  auto is = serial->open(QIODevice::ReadWrite);
+
+  if (serial->isOpen()) {
+    ui->portButton->setStyleSheet("color: rgb(115, 210, 22);");
+    ui->portButton->setText("On");
+    QObject::connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecv()));
+    return true;
+  } else {
+    serialOff(serial);
+    return false;
+  }
+}
+
+void MainWindow::serialRecv(void) {
+  auto text = serial->readAll();
+  ui->portTextBrowser->setText(text);
+}
+bool MainWindow::serialOff(QSerialPort *&serial) {
+  serial->disconnect(SIGNAL(readyRead()), this, SLOT(serialRecv()));
+  qDebug() << "close\n";
+  //    serial->clearError();
+  serial->clear();
+  serial->close();
+  qDebug() << serial->errorString();
+  delete serial;
+  ui->portButton->setStyleSheet("color: rgb(239, 41, 41);");
+  ui->portButton->setText("Off");
+  return false;
+}
+
+void MainWindow::on_portComboBox_popup_showing() {
+  ui->portComboBox->clear();
+  for (auto port : QSerialPortInfo::availablePorts())
+    ui->portComboBox->addItem(port.portName(), 0);
+}
