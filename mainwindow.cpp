@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   auto portlist = QSerialPortInfo::availablePorts();
   connect(ui->portComboBox, SIGNAL(popupShowing()), this,
-          SLOT(on_portComboBox_popup_showing()));
+          SLOT(on_portComboBoxPopupShowing()));
   for (auto port : portlist) ui->portComboBox->addItem(port.portName(), 0);
 }
 
@@ -47,18 +47,15 @@ void MainWindow::serialRecv(void) {
 }
 bool MainWindow::serialOff(QSerialPort *&serial) {
   serial->disconnect(SIGNAL(readyRead()), this, SLOT(serialRecv()));
-  qDebug() << "close\n";
-  //    serial->clearError();
-  serial->clear();
+  // serial->clear();
   serial->close();
-  qDebug() << serial->errorString();
   delete serial;
   ui->portButton->setStyleSheet("color: rgb(239, 41, 41);");
   ui->portButton->setText("Off");
   return false;
 }
 
-void MainWindow::on_portComboBox_popup_showing() {
+void MainWindow::on_portComboBoxPopupShowing() {
   ui->portComboBox->clear();
   for (auto port : QSerialPortInfo::availablePorts())
     ui->portComboBox->addItem(port.portName(), 0);

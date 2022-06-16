@@ -21,7 +21,8 @@ class MainWindow : public QMainWindow {
 
  private slots:
   void on_portButton_clicked();
-  void on_portComboBox_popup_showing();
+  void on_portComboBoxPopupShowing();
+  void serialRecv(void);
 
  private:
   Ui::MainWindow *ui;
@@ -29,6 +30,5 @@ class MainWindow : public QMainWindow {
 
   bool serialOn(QSerialPort *&serial);
   bool serialOff(QSerialPort *&serial);
-  void serialRecv(void);
 };
 #endif  // MAINWINDOW_H
