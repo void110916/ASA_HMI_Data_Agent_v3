@@ -13,7 +13,12 @@
         "new": "cpp",
         "qmainwindow": "cpp",
         "qcombobox": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "vector": "cpp"
     },
     	
 

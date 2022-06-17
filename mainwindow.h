@@ -24,11 +24,23 @@ class MainWindow : public QMainWindow {
   void on_portComboBoxPopupShowing();
   void serialRecv(void);
 
- private:
+  void on_enterbuttom_clicked();
+
+  void on_enterLine_returnPressed();
+  void updateSize(int index);
+
+  void on_tabWidget_currentChanged(int index);
+
+  void on_clearButton_clicked();
+
+private:
   Ui::MainWindow *ui;
   QSerialPort *serial;
 
   bool serialOn(QSerialPort *&serial);
   bool serialOff(QSerialPort *&serial);
+
+  const QStringList implicitText = {"\r", "\n", "\r\n", ""};
+  // bool event(QEvent *ev);
 };
 #endif  // MAINWINDOW_H
