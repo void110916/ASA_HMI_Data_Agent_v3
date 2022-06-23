@@ -27,17 +27,20 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
     qt_add_executable(HMI_agent
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ${QM_FILES}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET HMI_agent APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
 else()
+     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
     if(ANDROID)
         add_library(HMI_agent SHARED
             ${PROJECT_SOURCES}
@@ -47,10 +50,11 @@ else()
     else()
         add_executable(HMI_agent
             ${PROJECT_SOURCES}
+            ${QM_FILES}
         )
     endif()
 
-    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
 endif()
 
 target_link_libraries(HMI_agent PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::SerialPort)
