@@ -1,0 +1,3 @@
+[submodule "asaloader"]
+	path = asaloader
+	url = git@github.com:void110916/asaloader_v3.git
