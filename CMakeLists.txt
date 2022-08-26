@@ -2,20 +2,30 @@ cmake_minimum_required(VERSION 3.5)
 
 project(HMI_agent VERSION 0.1 LANGUAGES CXX)
 
+# ==== add compiler setting flag ===================================#
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")     
+    # TODO: compile static qt libraries then link with static
+# ================================================================= #
+# ==== add QT code generator =======================================#
+set(CMAKE_AUTOUIC ON)   # .ui file (gui design file)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)   # .qrc file (resources files)
+# ================================================================= #
+# ==== find used QT package ======================================= #
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools SerialPort)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools SerialPort)
 # find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS SerialComboBox)
-set(TS_FILES HMI_agent_zh_TW.ts)
+qt_standard_project_setup()
+# ================================================================= #
+# ===== add translator ============================================ #
+set(TS_FILES HMI_agent_zh_TW.ts HMI_agent_en_US.ts)
+qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
+# ================================================================= #
+# ===== add executable ============================================ #
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
@@ -23,11 +33,10 @@ set(PROJECT_SOURCES
         mainwindow.ui
         serialcombobox.cpp
         serialcombobox.h
-        ${TS_FILES}
+        ${QM_FILES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
     qt_add_executable(HMI_agent
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
@@ -37,8 +46,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 #    set_property(TARGET HMI_agent APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-
-
 else()
      qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
     if(ANDROID)
@@ -53,20 +60,40 @@ else()
             ${QM_FILES}
         )
     endif()
-
-
 endif()
 
+# ================================================================= #
+# ===== add QT/custom libraries ============================================ #
 target_link_libraries(HMI_agent PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::SerialPort)
-
+add_subdirectory(asaloader/asaloader/loader)
+target_link_libraries(${PROJECT_NAME} PRIVATE asaloaderlib)
+# ================================================================= #
 set_target_properties(HMI_agent PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE FALSE
     WIN32_EXECUTABLE TRUE
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(HMI_agent)
 endif()
+# ===== add install =====　The following script must only be executed at install time ======= #
+set(deploy_script "${CMAKE_CURRENT_BINARY_DIR}/deploy_${PROJECT_NAME}.cmake")
+set(executable_path "\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:${PROJECT_NAME}>") 
+file(GENERATE OUTPUT ${deploy_script} CONTENT "
+# Including the file pointed to by QT_DEPLOY_SUPPORT ensures the generated
+# deployment script has access to qt_deploy_runtime_dependencies()
+include(\"${QT_DEPLOY_SUPPORT}\")
+qt_deploy_runtime_dependencies(
+    EXECUTABLE \"${executable_path}\"
+    GENERATE_QT_CONF    # MUST NEED, when deploy in release, the path is different without it.
+    VERBOSE
+)")
+
+# Omitting RUNTIME DESTINATION will install a non-bundle target to CMAKE_INSTALL_BINDIR,
+# which coincides with the default value of QT_DEPLOY_BIN_DIR used above, './bin'.
+# Installing macOS bundles always requires an explicit BUNDLE DESTINATION option.
+install(TARGETS ${PROJECT_NAME} 
+        BUNDLE  DESTINATION .    
+)
+install(SCRIPT ${deploy_script})    # Add its runtime dependencies
+install(FILES ${QM_FILES} DESTINATION bin)
+# ================================================================= #
