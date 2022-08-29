@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtSerialPort/QSerialPort>
-#include <QtSerialPort/QSerialPortInfo>
+#include <QSerialPort>
+#include <QSerialPortInfo>
 #include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
@@ -33,13 +33,19 @@ class MainWindow : public QMainWindow {
 
   void on_clearButton_clicked();
 
-private:
+  void on_comboBox_currentTextChanged(const QString &arg1);
+  void on_programButton_clicked();
+  void on_fileBrowseButton_clicked();
+
+ private:
   Ui::MainWindow *ui;
   QSerialPort *serial;
+  QTranslator m_translator;    // contains the translations for this application
+  QTranslator m_translatorQt;  // contains the translations for qt
 
   bool serialOn(QSerialPort *&serial);
   bool serialOff(QSerialPort *&serial);
-
+  void loadLanguage(const QString &rLanguage);
   const QStringList implicitText = {"\r", "\n", "\r\n", ""};
   // bool event(QEvent *ev);
 };
