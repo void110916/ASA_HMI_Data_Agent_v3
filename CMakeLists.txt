@@ -22,7 +22,7 @@ qt_standard_project_setup()
 # ================================================================= #
 # ===== add translator ============================================ #
 set(TS_FILES HMI_agent_zh_TW.ts HMI_agent_en_US.ts)
-qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+qt_add_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 # ================================================================= #
 # ===== add executable ============================================ #
@@ -33,14 +33,12 @@ set(PROJECT_SOURCES
         mainwindow.ui
         serialcombobox.cpp
         serialcombobox.h
-        ${QM_FILES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(HMI_agent
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        ${QM_FILES}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET HMI_agent APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -57,11 +55,17 @@ else()
     else()
         add_executable(HMI_agent
             ${PROJECT_SOURCES}
-            ${QM_FILES}
         )
     endif()
 endif()
 
+qt_add_resources(HMI_agent "icons"
+    PREFIX "/"
+    BASE ${PROJECT_BINARY_DIR}
+    FILES
+    ${PROJECT_BINARY_DIR}/HMI_agent_en_US.qm
+    ${PROJECT_BINARY_DIR}/HMI_agent_zh_TW.qm
+)
 # ================================================================= #
 # ===== add QT/custom libraries ============================================ #
 target_link_libraries(HMI_agent PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::SerialPort)
@@ -95,5 +99,4 @@ install(TARGETS ${PROJECT_NAME}
         BUNDLE  DESTINATION .    
 )
 install(SCRIPT ${deploy_script})    # Add its runtime dependencies
-install(FILES ${QM_FILES} DESTINATION bin)
 # ================================================================= #
