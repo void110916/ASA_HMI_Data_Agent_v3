@@ -21,8 +21,15 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Ser
 qt_standard_project_setup()
 # ================================================================= #
 # ===== add translator ============================================ #
-set(TS_FILES HMI_agent_zh_TW.ts HMI_agent_en_US.ts)
-qt_add_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+ set(TS_FILES 
+    HMI_agent_zh_TW.ts 
+    HMI_agent_en_US.ts 
+    # asaloader/asaloader/asaloader_en_US.ts
+    # asaloader/asaloader/asaloader_zh_TW.ts
+)
+# file(GLOB TS_FILES HMI_agent_zh_TW.ts HMI_agent_en_US.ts)
+# qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} OPTIONS -no-obsolete)
+qt_add_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 # ================================================================= #
 # ===== add executable ============================================ #
@@ -33,6 +40,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
         serialcombobox.cpp
         serialcombobox.h
+        asaEncoder.cpp
+        asaEncoder.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -58,19 +67,24 @@ else()
         )
     endif()
 endif()
-
-qt_add_resources(HMI_agent "icons"
+# message(${PROJECT_BINARY_DIR})
+qt_add_resources(HMI_agent "tr"
     PREFIX "/"
     BASE ${PROJECT_BINARY_DIR}
     FILES
     ${PROJECT_BINARY_DIR}/HMI_agent_en_US.qm
     ${PROJECT_BINARY_DIR}/HMI_agent_zh_TW.qm
+    # ${PROJECT_BINARY_DIR}/asaloader/asaloader_en_US.qm
+    # ${PROJECT_BINARY_DIR}/asaloader/asaloader_zh_TW.qm
 )
 # ================================================================= #
 # ===== add QT/custom libraries ============================================ #
 target_link_libraries(HMI_agent PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::SerialPort)
 add_subdirectory(asaloader/asaloader/loader)
 target_link_libraries(${PROJECT_NAME} PRIVATE asaloaderlib)
+if(WIN32)
+  target_link_libraries(${PROJECT_NAME} PRIVATE wsock32 ws2_32)
+endif()
 # ================================================================= #
 set_target_properties(HMI_agent PROPERTIES
     WIN32_EXECUTABLE TRUE
