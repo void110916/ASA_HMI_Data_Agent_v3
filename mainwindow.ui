@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>891</width>
-    <height>534</height>
+    <width>823</width>
+    <height>506</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -66,7 +66,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -98,7 +98,7 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
+         <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
@@ -247,7 +247,7 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>100</width>
+                  <width>80</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -351,6 +351,9 @@
         </item>
         <item>
          <widget class="QGroupBox" name="hmiMSG">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -358,32 +361,32 @@
            </sizepolicy>
           </property>
           <property name="title">
-           <string>HMI message :</string>
+           <string>  HMI message :</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0">
+          <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
            <item>
-            <widget class="QTextEdit" name="textEdit"/>
+            <widget class="QPlainTextEdit" name="hmiText">
+             <property name="plainText">
+              <string/>
+             </property>
+            </widget>
            </item>
            <item>
-            <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,0,0">
+            <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,0">
              <item row="0" column="0">
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="newdataButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
-                <string>PushButton</string>
+                <string>new data</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="sendDataButton">
                <property name="text">
-                <string>PushButton</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="pushButton_3">
-               <property name="text">
-                <string>PushButton</string>
+                <string>send</string>
                </property>
               </widget>
              </item>
@@ -412,8 +415,8 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout4" stretch="1,0">
-          <item alignment="Qt::AlignTop">
+         <layout class="QHBoxLayout" name="horizontalLayout4" stretch="0,0">
+          <item>
            <widget class="QSplitter" name="splitter_10">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -562,23 +565,29 @@
                   <number>5</number>
                  </property>
                 </widget>
-                <widget class="SerialComboBox" name="portComboBox_2">
+                <widget class="SerialComboBox" name="portComboBox2">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>50</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>50</width>
+                   <width>80</width>
                    <height>25</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>100</width>
+                   <width>80</width>
                    <height>25</height>
+                  </size>
+                 </property>
+                 <property name="baseSize">
+                  <size>
+                   <width>80</width>
+                   <height>0</height>
                   </size>
                  </property>
                  <property name="mouseTracking">
@@ -654,16 +663,16 @@
                   <number>5</number>
                  </property>
                 </widget>
-                <widget class="QComboBox" name="deviceComboBox_2">
+                <widget class="QComboBox" name="deviceSelect">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>50</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -680,13 +689,16 @@
             </widget>
             <widget class="QSplitter" name="splitter_8">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="orientation">
               <enum>Qt::Vertical</enum>
+             </property>
+             <property name="childrenCollapsible">
+              <bool>false</bool>
              </property>
              <widget class="QSplitter" name="splitter_6">
               <property name="orientation">
@@ -784,6 +796,9 @@
               </widget>
              </widget>
              <widget class="QPushButton" name="programButton">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -811,7 +826,7 @@
                <enum>Qt::Horizontal</enum>
               </property>
               <property name="handleWidth">
-               <number>5</number>
+               <number>7</number>
               </property>
               <widget class="QLabel" name="label_6">
                <property name="sizePolicy">
@@ -821,7 +836,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Progress : </string>
+                <string>Progress :</string>
                </property>
                <property name="indent">
                 <number>5</number>
@@ -839,6 +854,17 @@
                </property>
               </widget>
              </widget>
+             <widget class="QLabel" name="loaderInfo">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+              <property name="indent">
+               <number>10</number>
+              </property>
+             </widget>
             </widget>
            </widget>
           </item>
@@ -851,21 +877,19 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft JhengHei UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;doc&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;使&lt;/span&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;用教學&lt;/span&gt;&lt;/h1&gt;
-&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;用 USB 將單板電腦與 PC 接上。&lt;/li&gt;
-&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;將單板電腦指撥開關撥到 “PROG”。&lt;/li&gt;
-&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;按下 “reset” 按鈕。&lt;/li&gt;
-&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選擇單板電腦連接到隻串列阜。&lt;/li&gt;
-&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選取欲燒錄之檔案 :
-&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;點選選擇檔案，並選取欲燒錄之檔案。&lt;/li&gt;
-&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;拖曳欲燒錄之檔案至此程式。&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
-&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;點選開始燒錄。&lt;/li&gt;
-&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;等待進度條跑到 100% 即完成燒錄。&lt;/li&gt;&lt;/ol&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;div id=&quot;doc&quot; class=&quot;markdown-body container-fluid comment-inner comment-enabled&quot; data-hard-breaks=&quot;true&quot;&gt;&lt;h1 id=&quot;Tutorial&quot; data-id=&quot;Tutorial&quot; style=&quot;&quot;&gt;&lt;span&gt;Tutorial&lt;/span&gt;&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;span&gt;Connect board to PC with USB.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;Change switch to “&lt;/span&gt;&lt;strong&gt;&lt;span&gt;PROG&lt;/span&gt;&lt;/strong&gt;&lt;span&gt;”.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;Press “&lt;/span&gt;&lt;strong&gt;&lt;span&gt;reset&lt;/span&gt;&lt;/strong&gt;&lt;span&gt;” button.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;Select the serial port connect by board.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;Select the hex file&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span&gt;Click “&lt;/span&gt;&lt;strong&gt;&lt;span&gt;…&lt;/span&gt;&lt;/strong&gt;&lt;span&gt;”, then select the *.hex file&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;Click “&lt;/span&gt;&lt;strong&gt;&lt;span&gt;start programming&lt;/span&gt;&lt;/strong&gt;&lt;span&gt;”.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;Wait till progress bar run to 100%.&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/div&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::MarkdownText</enum>
@@ -929,7 +953,7 @@ hr { height: 1px; border-width: 0; }
            </size>
           </property>
           <property name="title">
-           <string> Serial Settings</string>
+           <string>  Serial Settings</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
@@ -1010,7 +1034,7 @@ hr { height: 1px; border-width: 0; }
            </size>
           </property>
           <property name="title">
-           <string>Translation</string>
+           <string>  Translation</string>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
@@ -1032,7 +1056,7 @@ hr { height: 1px; border-width: 0; }
                <string>language :</string>
               </property>
              </widget>
-             <widget class="QComboBox" name="comboBox"/>
+             <widget class="QComboBox" name="langSelect"/>
             </widget>
            </item>
           </layout>

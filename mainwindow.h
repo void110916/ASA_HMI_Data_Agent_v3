@@ -6,6 +6,7 @@
 #include <QSerialPortInfo>
 #include <QtWidgets>
 
+#include "serialcombobox.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -18,34 +19,32 @@ class MainWindow : public QMainWindow {
  public:
   MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
-
+  QTranslator m_translator;    // contains the translations for this application
+  QTranslator m_translatorQt;  // contains the translations for qt
  private slots:
   void on_portButton_clicked();
   void on_portComboBoxPopupShowing();
+  // void on_portComboBox2PopupShowing();
   void serialRecv(void);
 
   void on_enterbuttom_clicked();
 
   void on_enterLine_returnPressed();
-  void updateSize(int index);
-
-  void on_tabWidget_currentChanged(int index);
 
   void on_clearButton_clicked();
 
-  void on_comboBox_currentTextChanged(const QString &arg1);
+  void on_langSelect_currentTextChanged(const QString &arg1);
   void on_programButton_clicked();
   void on_fileBrowseButton_clicked();
+  void on_newdataButton_clicked();
+  void on_sendDataButton_clicked();
 
  private:
   Ui::MainWindow *ui;
   QSerialPort *serial;
-  QTranslator m_translator;    // contains the translations for this application
-  QTranslator m_translatorQt;  // contains the translations for qt
-
-  bool serialOn(QSerialPort *&serial);
-  bool serialOff(QSerialPort *&serial);
-  void loadLanguage(const QString &rLanguage);
+  bool putSync=false;
+  bool serialOn(const QString &name);
+  bool serialOff();
   const QStringList implicitText = {"\r", "\n", "\r\n", ""};
   // bool event(QEvent *ev);
 };

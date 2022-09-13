@@ -1,6 +1,7 @@
 #include "serialcombobox.h"
-#include "mainwindow.h"
+
 #include "./ui_mainwindow.h"
+#include "mainwindow.h"
 SerialComboBox::SerialComboBox(QWidget *parent) : QComboBox(parent) {}
 
 void SerialComboBox::showPopup() {

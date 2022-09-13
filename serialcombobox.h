@@ -10,10 +10,12 @@ class SerialComboBox : public QComboBox {
  public:
   explicit SerialComboBox(QWidget *parent = nullptr);
   virtual void showPopup() override;
-signals:
-   void popupShowing();
-//  private:
-//   MainWindow *ui;
+  // void showPopupbox(SerialComboBox *combobox);
+ Q_SIGNALS:
+  // void popupShowingbox(SerialComboBox *combobox);
+  void popupShowing();
+  //  private:
+  //   MainWindow *ui;
 };
 
 #endif  // SERIALCOMBOBOX_H
