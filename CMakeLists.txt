@@ -2,17 +2,25 @@ cmake_minimum_required(VERSION 3.5)
 
 project(HMI_agent VERSION 0.1 LANGUAGES CXX)
 
-# ==== add compiler setting flag ===================================#
+# ==== add compiler setting flag ================================== #
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")     
     # TODO: compile static qt libraries then link with static
 # ================================================================= #
-# ==== add QT code generator =======================================#
+# ==== add QT code generator ====================================== #
 set(CMAKE_AUTOUIC ON)   # .ui file (gui design file)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)   # .qrc file (resources files)
+# ================================================================= #
+# ==== add executable icon  ======================================= #
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    enable_language("RC")
+    # set (WIN32_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/icons/HMI_Agent_icon.ico)
+    set(WIN32_RESOURCES "${CMAKE_CURRENT_SOURCE_DIR}/icons/Resource.rc")
+endif()
 # ================================================================= #
 # ==== find used QT package ======================================= #
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools SerialPort)
@@ -48,6 +56,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(HMI_agent
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ${WIN32_RESOURCES}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET HMI_agent APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -67,7 +76,7 @@ else()
         )
     endif()
 endif()
-# message(${PROJECT_BINARY_DIR})
+# message( ${CMAKE_CURRENT_SOURCE_DIR}/icons/HMI_Agent_icon.ico)
 qt_add_resources(HMI_agent "tr"
     PREFIX "/"
     BASE ${PROJECT_BINARY_DIR}
@@ -77,6 +86,13 @@ qt_add_resources(HMI_agent "tr"
     # ${PROJECT_BINARY_DIR}/asaloader/asaloader_en_US.qm
     # ${PROJECT_BINARY_DIR}/asaloader/asaloader_zh_TW.qm
 )
+qt_add_resources(HMI_agent "icons"
+    PREFIX "/icons"
+    BASE ${CMAKE_CURRENT_SOURCE_DIR}
+    FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/icons/HMI_Agent_icon.png
+)
+ 
 # ================================================================= #
 # ===== add QT/custom libraries ============================================ #
 target_link_libraries(HMI_agent PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::SerialPort)
