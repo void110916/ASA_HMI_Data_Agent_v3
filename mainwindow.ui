@@ -66,7 +66,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -372,7 +372,14 @@
             </widget>
            </item>
            <item>
-            <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,0">
+            <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,0,0">
+             <item row="0" column="1">
+              <widget class="QPushButton" name="hmiSendButton">
+               <property name="text">
+                <string>Send</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0">
               <widget class="QPushButton" name="newdataButton">
                <property name="enabled">
@@ -383,10 +390,10 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QPushButton" name="sendDataButton">
+             <item row="0" column="2">
+              <widget class="QPushButton" name="hmiClearButton">
                <property name="text">
-                <string>send</string>
+                <string>Clear</string>
                </property>
               </widget>
              </item>
@@ -621,8 +628,8 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>160</width>
-                  <height>24</height>
+                  <width>168</width>
+                  <height>25</height>
                  </size>
                 </property>
                 <property name="lineWidth">

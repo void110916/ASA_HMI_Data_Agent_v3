@@ -9,7 +9,9 @@
 #include "loader.h"
 using namespace std::string_literals;
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow),serial(new QSerialPort(this)) {
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      serial(new QSerialPort(this)) {
   ui->setupUi(this);
   ui->statusbar->setVisible(false);
   connect(ui->portComboBox, SIGNAL(popupShowing()), this,
@@ -22,10 +24,46 @@ MainWindow::MainWindow(QWidget *parent)
   ui->implicitText->setCurrentIndex(1);
   ui->langSelect->addItems(QStringList{"zh_TW", "en_US"});
   ui->langSelect->setCurrentIndex(0);
+  // connect(ui->, SIGNAL(hmiAppend(const QString &)), ui->hmiText,
+  //         SLOT(appendPlainText(const QString &)));
+  // connect(ui->, &portAppend, ui->portTextBrowser,
+  //         [ui->portTextBrowser](const QString &s) {
+  //           ui->portTextBrowser->moveCursor(QTextCursor::End);
+  //           ui->portTextBrowser->insertPlainText(s);
+  //         })
+  connectSig();
+  thread.start();
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
+void MainWindow::connectSig() {
+  connect(&thread, SIGNAL(progress(int)), ui->progressBar, SLOT(setValue(int)));
+  connect(&thread, SIGNAL(setInfo(const QString &)), ui->loaderInfo,
+          SLOT(setText(const QString &)));
+  connect(&thread, SIGNAL(serialDataThread::setEnable(bool)), ui->programButton,
+          SLOT(QPushButton::setEnable(bool)));
+  connect(&thread, SIGNAL(hmiAppend(const QString &)), ui->hmiText,
+          SLOT(appendPlainText(const QString &)));
+  connect(&thread, &serialDataThread::portAppend, ui->portTextBrowser,
+          [b = ui->portTextBrowser](const QString &s) {
+            b->moveCursor(QTextCursor::End);
+            b->insertPlainText(s);
+          });
+  connect(&thread, SIGNAL(dataWrite(const char *, qint64)), serial,
+          SLOT(write(const char *, qint64)));
+  connect(this, SIGNAL(programming(QString, int, QString)), &thread,
+          SLOT(programming(QString, int, QString)));
+  connect(this, SIGNAL(dataHandling(const QByteArray)), &thread,
+          SLOT(dataHandling(const QByteArray)));
+
+  connect(this, SIGNAL(exited()), &thread, SLOT(quit()));
+}
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    QMainWindow::closeEvent(event);
+    emit exited();
+}
 void MainWindow::on_portButton_clicked() {
   static bool isOn = false;
   if (!isOn) {
@@ -33,13 +71,14 @@ void MainWindow::on_portButton_clicked() {
     if (serial->isOpen()) {
       ui->portButton->setStyleSheet("color: rgb(115, 210, 22);");
       ui->portButton->setText("On");
-      QObject::connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecv()));
+      // QObject::connect(serial, SIGNAL(readyRead()), this,
+      // SLOT(serialRecv()));
     } else {
       serialOff();
     }
   } else {
     isOn = serialOff();
-    serial->disconnect(SIGNAL(readyRead()), this, SLOT(serialRecv()));
+    // serial->disconnect(SIGNAL(readyRead()), this, SLOT(serialRecv()));
     ui->portButton->setStyleSheet("color: rgb(239, 41, 41);");
     ui->portButton->setText("Off");
   }
@@ -71,33 +110,14 @@ bool MainWindow::serialOff() {
   return false;
 }
 
-void MainWindow::serialRecv(void) {
-  static ASAEncoder::ASADecode decode;
-  char ch;
-  QString s;
-  static QString sync;
-  // serial->waitForReadyRead(3000);
-  auto size = serial->bytesAvailable();
-  while (serial->read(&ch, 1)) {
-    if (!decode.put(ch)) {
-      s += ch;
-      if (decode.isSync(ch)) {
-        auto l = serial->write("~ACK\n");
-        s += u"~ACK\n"_qs;
-      }
-      putSync = ASAEncoder::ASAEncode::isSync(ch);
-    }
-
-    if (decode.isDone) {
-      // ui->hmiText->moveCursor(QTextCursor::End);
-      // ui->hmiText->insertPlainText(QString::fromStdString(decode.get()));
-      auto ss=decode.get();
-      ui->hmiText->appendPlainText(QString::fromStdString(ss));
-    }
-  }
-  ui->portTextBrowser->moveCursor(QTextCursor::End);
-  ui->portTextBrowser->insertPlainText(s);
-}
+// void MainWindow::serialRecv(void) {
+//   static ASAEncoder::ASADecode decode;
+//   char ch;
+//   QString s;
+//   static QString sync;
+//   // serial->waitForReadyRead(3000);
+//   (serial.readAll());
+// }
 
 void MainWindow::on_portComboBoxPopupShowing() {
   SerialComboBox *box = qobject_cast<SerialComboBox *>(sender());
@@ -107,10 +127,14 @@ void MainWindow::on_portComboBoxPopupShowing() {
       box->addItem(port.portName(), 0);
   }
 }
+void MainWindow::portTextAppend(const QString &s) {
+  ui->portTextBrowser->moveCursor(QTextCursor::End);
+  ui->portTextBrowser->insertPlainText(s);
+}
 
 void MainWindow::on_enterbuttom_clicked() {
-  auto text =
-     u">> "_qs+ ui->enterLine->text() + implicitText[ui->implicitText->currentIndex()];
+  auto text = u">> "_qs + ui->enterLine->text() +
+              implicitText[ui->implicitText->currentIndex()];
   serial->write(text.toStdString().c_str(), text.size());
   ui->enterLine->clear();
   if (ui->echoCheckBox->isChecked()) {
@@ -137,35 +161,16 @@ void MainWindow::on_programButton_clicked() {
   using Loader::Loader;
   typedef Loader::Loader::ProgMode ProgMode;
 
-  ui->programButton->setEnabled(false);
+  // ui->programButton->setEnabled(false);
   if (!ui->hexFile->text().isEmpty() &&
       !ui->portComboBox2->currentText().isEmpty()) {
-    if (serialOn(ui->portComboBox2->currentText())) {
-      Loader l(*serial, ui->deviceSelect->currentIndex(), ProgMode::FLASH,
-               ui->hexFile->text());
-      QString info;
-      info += tr("Device is ") +
-              QString("\"%1\"").arg(asa_dev_list[l.device_type()].name) + "\n";
-      info += tr("Flash hex size is %1 KB (%2 bytes)")
-                  .arg((float)l.flash_size() / 1024, 4)
-                  .arg(l.flash_size()) +
-              "\n";
-      info += tr("Externel Flash hex size is %1 KB (%2 bytes)")
-                  .arg((float)l.ext_flash_size() / 1024, 4)
-                  .arg(l.ext_flash_size()) +
-              "\n";
-      info += tr("EEPROM hex size is %1 bytes.").arg(l.eep_size()) + "\n";
-      info += tr("Estimated time is %1 s.").arg(l.prog_time()) + "\n";
-      ui->loaderInfo->setText(info);
+    auto &&portName = ui->portComboBox2->currentText();
+    int devNum = ui->deviceSelect->currentIndex();
+    auto &&hexFile = ui->hexFile->text();
 
-      for (int i = 0; i < l.total_steps(); ++i) {
-        l.do_step();
-        ui->progressBar->setValue(l.cur_step() * 100 / l.total_steps());
-      }
-    }
-    serialOff();
+    emit programming(portName, devNum, hexFile);
   }
-  ui->programButton->setEnabled(true);
+  // ui->programButton->setEnabled(true);
 }
 
 void MainWindow::on_fileBrowseButton_clicked() {
@@ -176,7 +181,7 @@ void MainWindow::on_fileBrowseButton_clicked() {
 
 void MainWindow::on_newdataButton_clicked() {}
 
-void MainWindow::on_sendDataButton_clicked() {
+void MainWindow::on_hmiSendButton_clicked() {
   std::string text = ui->hmiText->toPlainText().toStdString();
   ASAEncoder::ASAEncode encode;
   auto matchs = encode.split(text);
@@ -212,6 +217,16 @@ void MainWindow::on_sendDataButton_clicked() {
     }
   }
   std::string s;
-  for(int i=num2send;i<matchs.size();i++) s+=matchs[i];
+  for (int i = num2send; i < matchs.size(); i++) s += matchs[i];
   ui->hmiText->setPlainText(QString::fromStdString(s));
 }
+
+void MainWindow::on_hmiClearButton_clicked()
+{
+  // use clear() will clear both text and redo/undo history
+ auto c= ui->hmiText->textCursor();
+ c.select(QTextCursor::Document);
+ c.removeSelectedText();
+ ui->hmiText->setTextCursor(c);
+}
+
