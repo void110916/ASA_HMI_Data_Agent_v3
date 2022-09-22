@@ -1,0 +1,45 @@
+{
+    // 使用 IntelliSense 以得知可用的屬性。
+    // 暫留以檢視現有屬性的描述。
+    // 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [{
+        
+        "name": "(gdb) Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${command:cmake.launchTargetPath}",
+        "symbolLoadInfo": {
+            "loadAll": true,
+            "exceptionList": ""
+        },
+        // "args": [
+        //     "prog",
+        //     "-p",
+        //     "ttyACM1",
+        //     "-f",
+        //     "../../test_hex/m128_hello_world.hex"
+        // ],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [{
+            "name": "PATH",
+            "value": "%PATH%;C:/Qt/6.3.1/mingw_64/bin;C:/Qt/Tools/mingw1120_64/bin" //  ## important
+        }],
+        "externalConsole": true,
+        "launchCompleteCommand": "exec-run",
+        "windows": {
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:/MinGW/bin/gdb.exe"//"C:/ProgramFiles/Qt/Tools/mingw1120_64/bin/gdb.exe"
+        },
+
+        "showDisplayString": true,
+        // "visualizerFile": "${workspaceFolder}/../basic_setting/qt6.natvis.xml",
+        "setupCommands": [{
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+        }],
+        "logging": { "engineLogging": true } //optional
+    }]
+}

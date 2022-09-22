@@ -329,7 +329,23 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0">
             <item>
-             <widget class="QLineEdit" name="enterLine"/>
+             <widget class="QLineEdit" name="enterLine">
+              <property name="whatsThis">
+               <string notr="true"/>
+              </property>
+              <property name="accessibleName">
+               <string notr="true"/>
+              </property>
+              <property name="accessibleDescription">
+               <string notr="true"/>
+              </property>
+              <property name="inputMask">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="enterbuttom">

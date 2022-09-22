@@ -26,7 +26,9 @@ endif()
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools SerialPort)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools SerialPort)
 # find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS SerialComboBox)
-qt_standard_project_setup()
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_standard_project_setup()
+endif()
 # ================================================================= #
 # ===== add translator ============================================ #
  set(TS_FILES 
@@ -50,6 +52,8 @@ set(PROJECT_SOURCES
         serialcombobox.h
         asaEncoder.cpp
         asaEncoder.h
+        serialDataThread.cpp
+        serialDataThread.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -31,18 +31,27 @@ MainWindow::MainWindow(QWidget *parent)
   //           ui->portTextBrowser->moveCursor(QTextCursor::End);
   //           ui->portTextBrowser->insertPlainText(s);
   //         })
-  connectSig();
+  connectProgrammer();
+  connectTerminal();
+  connect(this, SIGNAL(exited()), &thread, SLOT(quit()));
   thread.start();
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::connectSig() {
+inline void MainWindow::connectProgrammer() {
   connect(&thread, SIGNAL(progress(int)), ui->progressBar, SLOT(setValue(int)));
   connect(&thread, SIGNAL(setInfo(const QString &)), ui->loaderInfo,
           SLOT(setText(const QString &)));
   connect(&thread, SIGNAL(serialDataThread::setEnable(bool)), ui->programButton,
           SLOT(QPushButton::setEnable(bool)));
+
+  connect(&thread, SIGNAL(dataWrite(const char *, qint64)), serial,
+          SLOT(write(const char *, qint64)));
+  connect(this, SIGNAL(programming(QString, int, QString)), &thread,
+          SLOT(programming(QString, int, QString)));
+}
+inline void MainWindow::connectTerminal() {
   connect(&thread, SIGNAL(hmiAppend(const QString &)), ui->hmiText,
           SLOT(appendPlainText(const QString &)));
   connect(&thread, &serialDataThread::portAppend, ui->portTextBrowser,
@@ -50,19 +59,20 @@ void MainWindow::connectSig() {
             b->moveCursor(QTextCursor::End);
             b->insertPlainText(s);
           });
-  connect(&thread, SIGNAL(dataWrite(const char *, qint64)), serial,
-          SLOT(write(const char *, qint64)));
-  connect(this, SIGNAL(programming(QString, int, QString)), &thread,
-          SLOT(programming(QString, int, QString)));
   connect(this, SIGNAL(dataHandling(const QByteArray)), &thread,
           SLOT(dataHandling(const QByteArray)));
-
-  connect(this, SIGNAL(exited()), &thread, SLOT(quit()));
 }
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    QMainWindow::closeEvent(event);
-    emit exited();
+inline void MainWindow::disconnectTerminal() {
+  disconnect(&thread, SIGNAL(hmiAppend(const QString &)), ui->hmiText,
+             SLOT(appendPlainText(const QString &)));
+  disconnect(&thread, &serialDataThread::portAppend, ui->portTextBrowser,
+             nullptr);
+  disconnect(this, SIGNAL(dataHandling(const QByteArray)), &thread,
+             SLOT(dataHandling(const QByteArray)));
+}
+void MainWindow::closeEvent(QCloseEvent *event) {
+  QMainWindow::closeEvent(event);
+  emit exited();
 }
 void MainWindow::on_portButton_clicked() {
   static bool isOn = false;
@@ -71,12 +81,14 @@ void MainWindow::on_portButton_clicked() {
     if (serial->isOpen()) {
       ui->portButton->setStyleSheet("color: rgb(115, 210, 22);");
       ui->portButton->setText("On");
-      // QObject::connect(serial, SIGNAL(readyRead()), this,
-      // SLOT(serialRecv()));
+      QObject::connect(serial, SIGNAL(readyRead()), this,
+                       SLOT(serialRecv()));
     } else {
       serialOff();
     }
   } else {
+    QObject::disconnect(serial, SIGNAL(readyRead()), this,
+                        SLOT(serialRecv()));
     isOn = serialOff();
     // serial->disconnect(SIGNAL(readyRead()), this, SLOT(serialRecv()));
     ui->portButton->setStyleSheet("color: rgb(239, 41, 41);");
@@ -110,14 +122,14 @@ bool MainWindow::serialOff() {
   return false;
 }
 
-// void MainWindow::serialRecv(void) {
-//   static ASAEncoder::ASADecode decode;
-//   char ch;
-//   QString s;
-//   static QString sync;
-//   // serial->waitForReadyRead(3000);
-//   (serial.readAll());
-// }
+void MainWindow::serialRecv(void) {
+  static ASAEncoder::ASADecode decode;
+  char ch;
+  QString s;
+  static QString sync;
+  // serial->waitForReadyRead(3000);
+  emit dataHandling(serial->readAll());
+}
 
 void MainWindow::on_portComboBoxPopupShowing() {
   SerialComboBox *box = qobject_cast<SerialComboBox *>(sender());
@@ -133,13 +145,13 @@ void MainWindow::portTextAppend(const QString &s) {
 }
 
 void MainWindow::on_enterbuttom_clicked() {
-  auto text = u">> "_qs + ui->enterLine->text() +
-              implicitText[ui->implicitText->currentIndex()];
+  auto text =
+      ui->enterLine->text() + implicitText[ui->implicitText->currentIndex()];
   serial->write(text.toStdString().c_str(), text.size());
   ui->enterLine->clear();
   if (ui->echoCheckBox->isChecked()) {
     ui->portTextBrowser->moveCursor(QTextCursor::End);
-    ui->portTextBrowser->insertPlainText(text);
+    ui->portTextBrowser->insertPlainText(u">> "_qs + text);
   }
 }
 
@@ -221,12 +233,10 @@ void MainWindow::on_hmiSendButton_clicked() {
   ui->hmiText->setPlainText(QString::fromStdString(s));
 }
 
-void MainWindow::on_hmiClearButton_clicked()
-{
+void MainWindow::on_hmiClearButton_clicked() {
   // use clear() will clear both text and redo/undo history
- auto c= ui->hmiText->textCursor();
- c.select(QTextCursor::Document);
- c.removeSelectedText();
- ui->hmiText->setTextCursor(c);
+  auto c = ui->hmiText->textCursor();
+  c.select(QTextCursor::Document);
+  c.removeSelectedText();
+  ui->hmiText->setTextCursor(c);
 }
-

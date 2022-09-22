@@ -1,11 +1,36 @@
 {
+    "C_Cpp.intelliSenseEngine":"Tag Parser",
+    "cmake.mingwSearchDirs": [
+        "C:/Qt/Tools/CMake_64/bin"
+        
+    ],
+    "cmake.generator": "Ninja",
     "cmake.configureOnOpen": true,
+    // "linux"
+    // "cmake.configureSettings": {
+    //     "CMAKE_PREFIX_PATH": "${env:HOME}/Qt/6.3.1/gcc_64/",
+    //     "ENABLE_FEATURE": "1",
+    //     "ENABLE_OTHER_FEATURE": "0",
+    //     "symbolSearchPath": "${env:HOME}/Qt/6.3.1/gcc_64/bin"
+    // },
+    // "cmake.configureArgs": [
+    //     "-DCMAKE_PREFIX_PATH=~/Qt/6.3.1/gcc_64"
+    // ],
+    // "windows":
     "cmake.configureSettings": {
-        "CMAKE_PREFIX_PATH": "${env:HOME}/Qt/6.2.4/gcc_64/",
+        "CMAKE_PREFIX_PATH": "C:/Qt/6.3.1/mingw_64",// C:/Qt/5.15.2/mingw81_32
+        "CMAKE_MAKE_PROGRAM": "C:/Program Files/ninja/ninja.exe",
         "ENABLE_FEATURE": "1",
         "ENABLE_OTHER_FEATURE": "0",
-        "symbolSearchPath": "${env:HOME}/Qt/6.2.4/gcc_64/bin"
+        // "symbolSearchPath": "$C:/ProgramFiles/Qt/6.3.1/mingw_64/bin",
     },
+    "cmake.environment": {
+        "PATH": "%PATH%;C:/Qt/6.3.1/mingw_64/bin;C:/Qt/Tools/mingw1120_64/bin"  //  ## IMPORTANT
+        // "PATH": "%PATH%;C:/Qt/5.15.2/mingw81_32/bin;C:/Qt/Tools/mingw81_32/bin"  //  ## IMPORTANT
+    },
+    "cmake.buildDirectory": "${workspaceFolder}/build/${buildKitHostOs}/${buildType}",
+    "cmake.installPrefix": "${workspaceFolder}/build/${buildKitHostOs}/install/",
+
     "files.associations": {
         "qapplication": "cpp",
         "qtserialport": "cpp",
@@ -18,9 +43,68 @@
         "string": "cpp",
         "deque": "cpp",
         "list": "cpp",
-        "vector": "cpp"
-    },
-    	
-
-
+        "vector": "cpp",
+        "qserialport": "cpp",
+        "array": "cpp",
+        "unordered_map": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "qlocale": "cpp",
+        "system_error": "cpp",
+        "optional": "cpp",
+        "ratio": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "variant": "cpp",
+        "cstdint": "cpp",
+        "regex": "cpp",
+        "atomic": "cpp",
+        "bit": "cpp",
+        "bitset": "cpp",
+        "cctype": "cpp",
+        "chrono": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "codecvt": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "condition_variable": "cpp",
+        "cstdarg": "cpp",
+        "cstddef": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "map": "cpp",
+        "exception": "cpp",
+        "algorithm": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "source_location": "cpp",
+        "future": "cpp",
+        "iomanip": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "mutex": "cpp",
+        "numbers": "cpp",
+        "ostream": "cpp",
+        "semaphore": "cpp",
+        "sstream": "cpp",
+        "stdexcept": "cpp",
+        "stop_token": "cpp",
+        "streambuf": "cpp",
+        "thread": "cpp",
+        "cinttypes": "cpp",
+        "typeinfo": "cpp",
+        "charconv": "cpp"
+    }
 }

@@ -22,7 +22,9 @@ class MainWindow : public QMainWindow {
   ~MainWindow();
   QTranslator m_translator;    // contains the translations for this application
   QTranslator m_translatorQt;  // contains the translations for qt
-  void connectSig();
+ inline void connectProgrammer();
+ inline void connectTerminal();
+ inline void disconnectTerminal();
  private slots:
   void on_portButton_clicked();
   void on_portComboBoxPopupShowing();
@@ -40,7 +42,7 @@ class MainWindow : public QMainWindow {
   void on_newdataButton_clicked();
   void on_hmiSendButton_clicked();
   void on_hmiClearButton_clicked();
-  // void serialRecv(void);
+  void serialRecv(void);
   void portTextAppend(const QString &s);
   // void hmiTextAppend(const QString s);
 
