@@ -62,7 +62,7 @@ void serialDataThread::programming(QString portName, int deviceNum,
     for (int i = 0; i < l.total_steps(); ++i) {
       l.do_step();
       emit progress(l.cur_step() * 100 / l.total_steps());
-      this->usleep(10000);
+      // this->usleep(10000);
     }
   }
   serial->setDataTerminalReady(false);

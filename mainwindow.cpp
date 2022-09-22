@@ -81,14 +81,12 @@ void MainWindow::on_portButton_clicked() {
     if (serial->isOpen()) {
       ui->portButton->setStyleSheet("color: rgb(115, 210, 22);");
       ui->portButton->setText("On");
-      QObject::connect(serial, SIGNAL(readyRead()), this,
-                       SLOT(serialRecv()));
+      QObject::connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecv()));
     } else {
       serialOff();
     }
   } else {
-    QObject::disconnect(serial, SIGNAL(readyRead()), this,
-                        SLOT(serialRecv()));
+    QObject::disconnect(serial, SIGNAL(readyRead()), this, SLOT(serialRecv()));
     isOn = serialOff();
     // serial->disconnect(SIGNAL(readyRead()), this, SLOT(serialRecv()));
     ui->portButton->setStyleSheet("color: rgb(239, 41, 41);");
@@ -96,7 +94,8 @@ void MainWindow::on_portButton_clicked() {
   }
 }
 bool MainWindow::serialOn(const QString &name) {
-  serial = new QSerialPort(name, this);
+  // serial = new QSerialPort(name, this);
+  serial->setPortName(name);
   serial->setBaudRate(QSerialPort::Baud38400);
   serial->setParity(QSerialPort::NoParity);
   serial->setDataBits(QSerialPort::Data8);
@@ -117,7 +116,7 @@ bool MainWindow::serialOff() {
   serial->clear();
 
   serial->close();
-  delete serial;
+  // delete serial;
 
   return false;
 }
@@ -151,7 +150,7 @@ void MainWindow::on_enterbuttom_clicked() {
   ui->enterLine->clear();
   if (ui->echoCheckBox->isChecked()) {
     ui->portTextBrowser->moveCursor(QTextCursor::End);
-    ui->portTextBrowser->insertPlainText(u">> "_qs + text);
+    ui->portTextBrowser->insertPlainText(u"<< "_qs + text);
   }
 }
 
@@ -239,4 +238,31 @@ void MainWindow::on_hmiClearButton_clicked() {
   c.select(QTextCursor::Document);
   c.removeSelectedText();
   ui->hmiText->setTextCursor(c);
+}
+
+void MainWindow::on_tabWidget_currentChanged(int index) {
+  static bool portIsOn = false;
+  if (index == 0) {
+    if (portIsOn) {
+      serialOn(ui->portComboBox->currentText());
+      if (serial->isOpen()) {
+        ui->portButton->setStyleSheet("color: rgb(115, 210, 22);");
+        ui->portButton->setText("On");
+        QObject::connect(serial, SIGNAL(readyRead()), this,
+        SLOT(serialRecv()));
+      } else {
+        serialOff();
+      }
+    }
+  } else {
+    if (serial != NULL) {
+      portIsOn = serial->isOpen();
+      QObject::disconnect(serial, SIGNAL(readyRead()), this,
+                          SLOT(serialRecv()));
+      serialOff();
+    } else
+      portIsOn = false;
+    ui->portButton->setStyleSheet("color: rgb(239, 41, 41);");
+    ui->portButton->setText("Off");
+  }
 }

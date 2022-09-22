@@ -44,6 +44,7 @@ class MainWindow : public QMainWindow {
   void on_hmiClearButton_clicked();
   void serialRecv(void);
   void portTextAppend(const QString &s);
+  void on_tabWidget_currentChanged(int index);
   // void hmiTextAppend(const QString s);
 
  signals:
