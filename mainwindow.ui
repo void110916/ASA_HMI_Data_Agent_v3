@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>823</width>
-    <height>506</height>
+    <width>900</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>750</width>
-    <height>400</height>
+    <width>600</width>
+    <height>450</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>0</width>
+    <height>350</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -39,10 +45,7 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
-    </property>
-    <item row="1" column="0">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -59,6 +62,12 @@
       <property name="cursor">
        <cursorShape>ArrowCursor</cursorShape>
       </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
       <property name="autoFillBackground">
        <bool>true</bool>
       </property>
@@ -66,10 +75,13 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="movable">
        <bool>true</bool>
+      </property>
+      <property name="tabBarAutoHide">
+       <bool>false</bool>
       </property>
       <widget class="QWidget" name="serialTab">
        <property name="sizePolicy">
@@ -90,338 +102,310 @@
          <height>429</height>
         </size>
        </property>
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+       <property name="tabletTracking">
+        <bool>true</bool>
+       </property>
        <property name="autoFillBackground">
         <bool>true</bool>
        </property>
        <attribute name="title">
         <string>Serial</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
-          </property>
-          <item>
-           <widget class="QGroupBox" name="groupBox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>400</width>
-              <height>60</height>
-             </size>
-            </property>
-            <property name="baseSize">
-             <size>
-              <width>0</width>
-              <height>69</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="title">
-             <string>  Serial Info :</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-            <layout class="QFormLayout" name="formLayout">
-             <property name="fieldGrowthPolicy">
-              <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-             </property>
-             <property name="rowWrapPolicy">
-              <enum>QFormLayout::DontWrapRows</enum>
-             </property>
-             <property name="labelAlignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="formAlignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="horizontalSpacing">
-              <number>6</number>
-             </property>
-             <property name="verticalSpacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>2</number>
-             </property>
-             <property name="topMargin">
-              <number>2</number>
-             </property>
-             <property name="rightMargin">
-              <number>2</number>
-             </property>
-             <property name="bottomMargin">
-              <number>2</number>
-             </property>
-             <item row="0" column="1">
-              <widget class="QSplitter" name="splitter">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="lineWidth">
-                <number>0</number>
-               </property>
-               <property name="midLineWidth">
-                <number>0</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="opaqueResize">
-                <bool>true</bool>
-               </property>
-               <property name="handleWidth">
-                <number>10</number>
-               </property>
-               <property name="childrenCollapsible">
-                <bool>true</bool>
-               </property>
-               <widget class="QLabel" name="label">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="layoutDirection">
-                 <enum>Qt::RightToLeft</enum>
-                </property>
-                <property name="text">
-                 <string>Ports :</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignHCenter|Qt::AlignTop</set>
-                </property>
-                <property name="margin">
-                 <number>0</number>
-                </property>
-                <property name="indent">
-                 <number>5</number>
-                </property>
-               </widget>
-               <widget class="SerialComboBox" name="portComboBox">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                  <horstretch>50</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>50</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>80</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="mouseTracking">
-                 <bool>false</bool>
-                </property>
-                <property name="tabletTracking">
-                 <bool>false</bool>
-                </property>
-                <property name="editable">
-                 <bool>false</bool>
-                </property>
-               </widget>
-               <widget class="QPushButton" name="portButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="autoFillBackground">
-                 <bool>true</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(239, 41, 41);</string>
-                </property>
-                <property name="text">
-                 <string notr="true">Off</string>
-                </property>
-                <property name="checkable">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPlainTextEdit" name="portText">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>400</width>
-              <height>200</height>
-             </size>
-            </property>
-            <property name="baseSize">
-             <size>
-              <width>600</width>
-              <height>326</height>
-             </size>
-            </property>
-            <property name="cursor" stdset="0">
-             <cursorShape>IBeamCursor</cursorShape>
-            </property>
-            <property name="mouseTracking">
-             <bool>false</bool>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
-            <property name="acceptDrops">
-             <bool>false</bool>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="plainText">
-             <string notr="true"/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0">
-            <item>
-             <widget class="QLineEdit" name="enterLine">
-              <property name="whatsThis">
-               <string notr="true"/>
-              </property>
-              <property name="accessibleName">
-               <string notr="true"/>
-              </property>
-              <property name="accessibleDescription">
-               <string notr="true"/>
-              </property>
-              <property name="inputMask">
-               <string notr="true"/>
-              </property>
-              <property name="text">
-               <string notr="true"/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="enterbuttom">
-              <property name="text">
-               <string notr="true">Enter</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="clearButton">
-              <property name="text">
-               <string notr="true">Clear</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="hmiMSG">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
+       <layout class="QFormLayout" name="formLayout_6">
+        <item row="0" column="0" colspan="2">
+         <widget class="QSplitter" name="splitter_3">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="title">
-           <string>  HMI message :</string>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
-           <item>
-            <widget class="QPlainTextEdit" name="hmiText">
-             <property name="plainText">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,0,0">
-             <item row="0" column="1">
-              <widget class="QPushButton" name="hmiSendButton">
-               <property name="text">
-                <string>Send</string>
+          <widget class="QWidget" name="">
+           <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
+            <item>
+             <widget class="QGroupBox" name="groupBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>69</height>
+               </size>
+              </property>
+              <property name="baseSize">
+               <size>
+                <width>0</width>
+                <height>69</height>
+               </size>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="title">
+               <string>  Serial Info :</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+              <layout class="QFormLayout" name="formLayout_2">
+               <property name="horizontalSpacing">
+                <number>5</number>
                </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="newdataButton">
-               <property name="enabled">
-                <bool>false</bool>
+               <property name="verticalSpacing">
+                <number>0</number>
                </property>
-               <property name="text">
-                <string>new data</string>
+               <property name="leftMargin">
+                <number>5</number>
                </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="hmiClearButton">
-               <property name="text">
-                <string>Clear</string>
+               <property name="topMargin">
+                <number>5</number>
                </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="0" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                 <item>
+                  <widget class="QLabel" name="label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
+                   <property name="text">
+                    <string>Ports :</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="margin">
+                    <number>0</number>
+                   </property>
+                   <property name="indent">
+                    <number>5</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="SerialComboBox" name="portComboBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                     <horstretch>50</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>80</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="mouseTracking">
+                    <bool>false</bool>
+                   </property>
+                   <property name="tabletTracking">
+                    <bool>false</bool>
+                   </property>
+                   <property name="editable">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="portButton">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="autoFillBackground">
+                    <bool>true</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(239, 41, 41);</string>
+                   </property>
+                   <property name="text">
+                    <string notr="true">Off</string>
+                   </property>
+                   <property name="checkable">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="portText">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="baseSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="cursor" stdset="0">
+               <cursorShape>IBeamCursor</cursorShape>
+              </property>
+              <property name="mouseTracking">
+               <bool>true</bool>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="acceptDrops">
+               <bool>true</bool>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="backgroundVisible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0">
+              <item>
+               <widget class="QLineEdit" name="enterLine">
+                <property name="whatsThis">
+                 <string notr="true"/>
+                </property>
+                <property name="accessibleName">
+                 <string notr="true"/>
+                </property>
+                <property name="accessibleDescription">
+                 <string notr="true"/>
+                </property>
+                <property name="inputMask">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="enterbuttom">
+                <property name="text">
+                 <string notr="true">Enter</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="clearButton">
+                <property name="text">
+                 <string notr="true">Clear</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QGroupBox" name="hmiMSG">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>  HMI message :</string>
+           </property>
+           <layout class="QFormLayout" name="formLayout_5">
+            <item row="0" column="0" colspan="2">
+             <widget class="QPlainTextEdit" name="hmiText">
+              <property name="plainText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,1,1">
+              <item>
+               <widget class="QPushButton" name="newdataButton">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>new data</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="hmiSendButton">
+                <property name="text">
+                 <string>Send</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="hmiClearButton">
+                <property name="text">
+                 <string>Clear</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -442,92 +426,215 @@
        <attribute name="title">
         <string>Loader</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout4" stretch="0,0">
-          <item>
-           <widget class="QSplitter" name="splitter_10">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="handleWidth">
-             <number>4</number>
-            </property>
-            <widget class="QGroupBox" name="groupBox_4">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>78</height>
-              </size>
-             </property>
-             <property name="baseSize">
-              <size>
-               <width>0</width>
-               <height>80</height>
-              </size>
-             </property>
-             <property name="layoutDirection">
-              <enum>Qt::LeftToRight</enum>
-             </property>
-             <property name="autoFillBackground">
-              <bool>true</bool>
-             </property>
-             <property name="title">
-              <string>  Serial Info :</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="flat">
-              <bool>false</bool>
-             </property>
-             <property name="checkable">
-              <bool>false</bool>
-             </property>
-             <layout class="QFormLayout" name="formLayout_2">
-              <property name="sizeConstraint">
-               <enum>QLayout::SetDefaultConstraint</enum>
+       <layout class="QFormLayout" name="formLayout_4">
+        <item row="0" column="0" colspan="2">
+         <widget class="QSplitter" name="splitter">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <widget class="QWidget" name="">
+           <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,1">
+            <item>
+             <widget class="QGroupBox" name="groupBox_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <property name="fieldGrowthPolicy">
-               <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>78</height>
+               </size>
               </property>
-              <property name="rowWrapPolicy">
-               <enum>QFormLayout::DontWrapRows</enum>
+              <property name="baseSize">
+               <size>
+                <width>0</width>
+                <height>80</height>
+               </size>
               </property>
-              <property name="labelAlignment">
-               <set>Qt::AlignCenter</set>
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
               </property>
-              <property name="formAlignment">
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="title">
+               <string>  Serial Info :</string>
+              </property>
+              <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
-              <property name="horizontalSpacing">
-               <number>6</number>
+              <property name="flat">
+               <bool>false</bool>
               </property>
-              <property name="verticalSpacing">
-               <number>3</number>
+              <property name="checkable">
+               <bool>false</bool>
               </property>
-              <property name="leftMargin">
-               <number>2</number>
-              </property>
-              <property name="topMargin">
-               <number>2</number>
-              </property>
-              <property name="rightMargin">
-               <number>2</number>
-              </property>
-              <property name="bottomMargin">
-               <number>2</number>
-              </property>
-              <item row="0" column="1">
-               <widget class="QSplitter" name="splitter_4">
+              <layout class="QFormLayout" name="formLayout">
+               <property name="horizontalSpacing">
+                <number>5</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>5</number>
+               </property>
+               <property name="leftMargin">
+                <number>5</number>
+               </property>
+               <property name="topMargin">
+                <number>5</number>
+               </property>
+               <property name="bottomMargin">
+                <number>5</number>
+               </property>
+               <item row="0" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="QLabel" name="label_4">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
+                   <property name="text">
+                    <string>Ports :</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="margin">
+                    <number>0</number>
+                   </property>
+                   <property name="indent">
+                    <number>5</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="SerialComboBox" name="portComboBox2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>50</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>80</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="baseSize">
+                    <size>
+                     <width>80</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="mouseTracking">
+                    <bool>false</bool>
+                   </property>
+                   <property name="tabletTracking">
+                    <bool>false</bool>
+                   </property>
+                   <property name="autoFillBackground">
+                    <bool>true</bool>
+                   </property>
+                   <property name="editable">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="1" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <widget class="QLabel" name="label_7">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="baseSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Device :</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="indent">
+                    <number>5</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="deviceSelect">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <widget class="QLabel" name="label_5">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -538,106 +645,24 @@
                   <height>25</height>
                  </size>
                 </property>
-                <property name="autoFillBackground">
-                 <bool>true</bool>
+                <property name="baseSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
                 </property>
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
+                <property name="text">
+                 <string>Hex File :</string>
                 </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Plain</enum>
+                <property name="indent">
+                 <number>5</number>
                 </property>
-                <property name="lineWidth">
-                 <number>0</number>
-                </property>
-                <property name="midLineWidth">
-                 <number>0</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="opaqueResize">
-                 <bool>true</bool>
-                </property>
-                <property name="handleWidth">
-                 <number>10</number>
-                </property>
-                <property name="childrenCollapsible">
-                 <bool>true</bool>
-                </property>
-                <widget class="QLabel" name="label_4">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>50</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                 <property name="layoutDirection">
-                  <enum>Qt::RightToLeft</enum>
-                 </property>
-                 <property name="text">
-                  <string>Ports :</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="margin">
-                  <number>0</number>
-                 </property>
-                 <property name="indent">
-                  <number>5</number>
-                 </property>
-                </widget>
-                <widget class="SerialComboBox" name="portComboBox2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                   <horstretch>50</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>80</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>80</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                 <property name="baseSize">
-                  <size>
-                   <width>80</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="mouseTracking">
-                  <bool>false</bool>
-                 </property>
-                 <property name="tabletTracking">
-                  <bool>false</bool>
-                 </property>
-                 <property name="autoFillBackground">
-                  <bool>true</bool>
-                 </property>
-                 <property name="editable">
-                  <bool>false</bool>
-                 </property>
-                </widget>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QSplitter" name="splitter_5">
+              <item>
+               <widget class="QLineEdit" name="hexFile">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -645,188 +670,66 @@
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
+                  <height>24</height>
+                 </size>
+                </property>
+                <property name="baseSize">
+                 <size>
+                  <width>100</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+                <property name="cursorPosition">
+                 <number>0</number>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="dragEnabled">
+                 <bool>true</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="fileBrowseButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>25</width>
                   <height>25</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>160</width>
-                  <height>24</height>
+                  <width>25</width>
+                  <height>25</height>
                  </size>
                 </property>
-                <property name="lineWidth">
-                 <number>0</number>
+                <property name="baseSize">
+                 <size>
+                  <width>25</width>
+                  <height>25</height>
+                 </size>
                 </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                <property name="text">
+                 <string notr="true">...</string>
                 </property>
-                <property name="handleWidth">
-                 <number>10</number>
-                </property>
-                <widget class="QLabel" name="label_7">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>50</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="baseSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Device :</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="indent">
-                  <number>5</number>
-                 </property>
-                </widget>
-                <widget class="QComboBox" name="deviceSelect">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                </widget>
                </widget>
               </item>
              </layout>
-            </widget>
-            <widget class="QSplitter" name="splitter_8">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="childrenCollapsible">
-              <bool>false</bool>
-             </property>
-             <widget class="QSplitter" name="splitter_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="handleWidth">
-               <number>10</number>
-              </property>
-              <widget class="QLabel" name="label_5">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="baseSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Hex File :</string>
-               </property>
-               <property name="indent">
-                <number>5</number>
-               </property>
-              </widget>
-              <widget class="QLineEdit" name="hexFile">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="baseSize">
-                <size>
-                 <width>100</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="text">
-                <string notr="true"/>
-               </property>
-               <property name="cursorPosition">
-                <number>0</number>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-               <property name="dragEnabled">
-                <bool>true</bool>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-              <widget class="QPushButton" name="fileBrowseButton">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="baseSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="text">
-                <string notr="true">...</string>
-               </property>
-              </widget>
-             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="programButton">
               <property name="enabled">
                <bool>true</bool>
@@ -847,48 +750,50 @@
                <string>start programming</string>
               </property>
              </widget>
-             <widget class="QSplitter" name="splitter_7">
-              <property name="baseSize">
-               <size>
-                <width>100</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="handleWidth">
-               <number>7</number>
-              </property>
-              <widget class="QLabel" name="label_6">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Progress :</string>
-               </property>
-               <property name="indent">
-                <number>5</number>
-               </property>
-              </widget>
-              <widget class="QProgressBar" name="progressBar">
-               <property name="baseSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="value">
-                <number>0</number>
-               </property>
-              </widget>
-             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QLabel" name="label_6">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Progress :</string>
+                </property>
+                <property name="indent">
+                 <number>5</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QProgressBar" name="progressBar">
+                <property name="baseSize">
+                 <size>
+                  <width>80</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
              <widget class="QLabel" name="loaderInfo">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="text">
                <string/>
+              </property>
+              <property name="textFormat">
+               <enum>Qt::PlainText</enum>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -897,19 +802,18 @@
                <number>10</number>
               </property>
              </widget>
-            </widget>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_8">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>&lt;div id=&quot;doc&quot; class=&quot;markdown-body container-fluid comment-inner comment-enabled&quot; data-hard-breaks=&quot;true&quot;&gt;&lt;h1 id=&quot;Tutorial&quot; data-id=&quot;Tutorial&quot; style=&quot;&quot;&gt;&lt;span&gt;Tutorial&lt;/span&gt;&lt;/h1&gt;&lt;ol&gt;
+            </item>
+           </layout>
+          </widget>
+          <widget class="QLabel" name="label_8">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>&lt;div id=&quot;doc&quot; class=&quot;markdown-body container-fluid comment-inner comment-enabled&quot; data-hard-breaks=&quot;true&quot;&gt;&lt;h1 id=&quot;Tutorial&quot; data-id=&quot;Tutorial&quot; style=&quot;&quot;&gt;&lt;span&gt;Tutorial&lt;/span&gt;&lt;/h1&gt;&lt;ol&gt;
 &lt;li&gt;&lt;span&gt;Connect board to PC with USB.&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span&gt;Change switch to “&lt;/span&gt;&lt;strong&gt;&lt;span&gt;PROG&lt;/span&gt;&lt;/strong&gt;&lt;span&gt;”.&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span&gt;Press “&lt;/span&gt;&lt;strong&gt;&lt;span&gt;reset&lt;/span&gt;&lt;/strong&gt;&lt;span&gt;” button.&lt;/span&gt;&lt;/li&gt;
@@ -922,28 +826,27 @@
 &lt;li&gt;&lt;span&gt;Click “&lt;/span&gt;&lt;strong&gt;&lt;span&gt;start programming&lt;/span&gt;&lt;/strong&gt;&lt;span&gt;”.&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span&gt;Wait till progress bar run to 100%.&lt;/span&gt;&lt;/li&gt;
 &lt;/ol&gt;&lt;/div&gt;</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::MarkdownText</enum>
-            </property>
-            <property name="scaledContents">
-             <bool>false</bool>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="margin">
-             <number>15</number>
-            </property>
-            <property name="indent">
-             <number>-1</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::MarkdownText</enum>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="margin">
+            <number>15</number>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
+         </widget>
         </item>
        </layout>
       </widget>
