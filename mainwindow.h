@@ -61,6 +61,6 @@ class MainWindow : public QMainWindow {
   bool serialOff();
   const QStringList implicitText = {"\r", "\n", "\r\n", ""};
   void closeEvent(QCloseEvent *event);
-  // bool event(QEvent *ev);
+
 };
 #endif  // MAINWINDOW_H

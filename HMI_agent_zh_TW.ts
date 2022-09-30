@@ -15,49 +15,49 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="129"/>
-        <location filename="mainwindow.ui" line="453"/>
+        <location filename="mainwindow.ui" line="476"/>
         <source>  Serial Info :</source>
         <translation>  串列埠資訊 :</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="223"/>
-        <location filename="mainwindow.ui" line="556"/>
+        <location filename="mainwindow.ui" line="579"/>
         <source>Ports :</source>
         <translation>串列埠 :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="364"/>
+        <location filename="mainwindow.ui" line="380"/>
         <source>  HMI message :</source>
         <oldsource>HMI message :</oldsource>
         <translation>  HMI 訊息 :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="382"/>
+        <location filename="mainwindow.ui" line="395"/>
+        <source>Send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="405"/>
         <source>new data</source>
         <translation>新資料</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="389"/>
-        <source>send</source>
-        <translation>傳送</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="414"/>
+        <location filename="mainwindow.ui" line="437"/>
         <source>Loader</source>
         <translation>串列燒錄</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="657"/>
+        <location filename="mainwindow.ui" line="680"/>
         <source>Device :</source>
         <translation>裝置 :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="815"/>
+        <location filename="mainwindow.ui" line="838"/>
         <source>start programming</source>
         <translation>開始燒錄</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="880"/>
+        <location filename="mainwindow.ui" line="903"/>
         <source>&lt;div id=&quot;doc&quot; class=&quot;markdown-body container-fluid comment-inner comment-enabled&quot; data-hard-breaks=&quot;true&quot;&gt;&lt;h1 id=&quot;Tutorial&quot; data-id=&quot;Tutorial&quot; style=&quot;&quot;&gt;&lt;span&gt;Tutorial&lt;/span&gt;&lt;/h1&gt;&lt;ol&gt;
 &lt;li&gt;&lt;span&gt;Connect board to PC with USB.&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span&gt;Change switch to “&lt;/span&gt;&lt;strong&gt;&lt;span&gt;PROG&lt;/span&gt;&lt;/strong&gt;&lt;span&gt;”.&lt;/span&gt;&lt;/li&gt;
@@ -86,77 +86,57 @@
 &lt;/ol&gt;&lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="956"/>
+        <location filename="mainwindow.ui" line="979"/>
         <source>  Serial Settings</source>
         <translation>  串列埠設定</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1037"/>
+        <location filename="mainwindow.ui" line="1069"/>
         <source>  Translation</source>
         <translation>  翻譯</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="730"/>
+        <location filename="mainwindow.ui" line="753"/>
         <source>Hex File :</source>
         <translation>Hex 檔案 :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="839"/>
+        <location filename="mainwindow.ui" line="412"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="862"/>
         <source>Progress :</source>
         <translation>進度條 :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="935"/>
+        <location filename="mainwindow.ui" line="958"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="984"/>
+        <location filename="mainwindow.ui" line="1007"/>
         <source>implicit text :</source>
         <translation>結尾隱藏文字 :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1056"/>
+        <location filename="mainwindow.ui" line="1088"/>
         <source>language :</source>
         <translation>語言 :</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="147"/>
-        <source>Device is </source>
-        <translation>裝置: </translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="149"/>
-        <source>Flash hex size is %1 KB (%2 bytes)</source>
-        <translation>FLASH 大小為 %1 KB (%2 位元組)</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="153"/>
-        <source>Externel Flash hex size is %1 KB (%2 bytes)</source>
-        <translation>外部 Flash 大小為 %1 KB (%2 位元組)</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="157"/>
-        <source>EEPROM hex size is %1 bytes.</source>
-        <translation>使用EEPROM大小為 %1 位元組</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="158"/>
-        <source>Estimated time is %1 s.</source>
-        <translation>估計時間是 %1 s</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="172"/>
+        <location filename="mainwindow.cpp" line="190"/>
         <source>open file</source>
         <translation>開啟檔案</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="186"/>
+        <location filename="mainwindow.cpp" line="204"/>
         <source>multi format detect</source>
         <translation>多重結構偵測</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="187"/>
+        <location filename="mainwindow.cpp" line="205"/>
         <source>There are multi format ready to send,
 Do you want to send all at ones?</source>
         <translation>偵測到多重結構，
@@ -248,6 +228,34 @@ Do you want to send all at ones?</source>
     </message>
     <message>
         <location filename="asaloader/asaloader/main.cpp" line="105"/>
+        <source>Estimated time is %1 s.</source>
+        <translation>估計時間是 %1 s</translation>
+    </message>
+</context>
+<context>
+    <name>serialDataThread</name>
+    <message>
+        <location filename="serialDataThread.cpp" line="48"/>
+        <source>Device is </source>
+        <translation>裝置: </translation>
+    </message>
+    <message>
+        <location filename="serialDataThread.cpp" line="50"/>
+        <source>Flash hex size is %1 KB (%2 bytes)</source>
+        <translation>FLASH 大小為 %1 KB (%2 位元組)</translation>
+    </message>
+    <message>
+        <location filename="serialDataThread.cpp" line="54"/>
+        <source>Externel Flash hex size is %1 KB (%2 bytes)</source>
+        <translation>外部 Flash 大小為 %1 KB (%2 位元組)</translation>
+    </message>
+    <message>
+        <location filename="serialDataThread.cpp" line="58"/>
+        <source>EEPROM hex size is %1 bytes.</source>
+        <translation>使用EEPROM大小為 %1 位元組</translation>
+    </message>
+    <message>
+        <location filename="serialDataThread.cpp" line="59"/>
         <source>Estimated time is %1 s.</source>
         <translation>估計時間是 %1 s</translation>
     </message>

@@ -66,7 +66,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -293,7 +293,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QTextBrowser" name="portTextBrowser">
+           <widget class="QPlainTextEdit" name="portText">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
               <horstretch>0</horstretch>
@@ -321,8 +321,14 @@
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
-            <property name="cursorWidth">
-             <number>3</number>
+            <property name="acceptDrops">
+             <bool>false</bool>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="plainText">
+             <string notr="true"/>
             </property>
            </widget>
           </item>
@@ -644,8 +650,8 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>168</width>
-                  <height>25</height>
+                  <width>160</width>
+                  <height>24</height>
                  </size>
                 </property>
                 <property name="lineWidth">
@@ -783,6 +789,9 @@
                </property>
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+               <property name="dragEnabled">
+                <bool>true</bool>
                </property>
                <property name="clearButtonEnabled">
                 <bool>false</bool>

@@ -15,49 +15,49 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="129"/>
-        <location filename="mainwindow.ui" line="453"/>
+        <location filename="mainwindow.ui" line="476"/>
         <source>  Serial Info :</source>
         <translation>  Serial Info :</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="223"/>
-        <location filename="mainwindow.ui" line="556"/>
+        <location filename="mainwindow.ui" line="579"/>
         <source>Ports :</source>
         <translation>Ports :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="364"/>
+        <location filename="mainwindow.ui" line="380"/>
         <source>  HMI message :</source>
         <oldsource>HMI message :</oldsource>
         <translation>  HMI message :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="382"/>
+        <location filename="mainwindow.ui" line="395"/>
+        <source>Send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="405"/>
         <source>new data</source>
         <translation>new data</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="389"/>
-        <source>send</source>
-        <translation>send</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="414"/>
+        <location filename="mainwindow.ui" line="437"/>
         <source>Loader</source>
         <translation>Loader</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="657"/>
+        <location filename="mainwindow.ui" line="680"/>
         <source>Device :</source>
         <translation>Device :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="815"/>
+        <location filename="mainwindow.ui" line="838"/>
         <source>start programming</source>
         <translation>start programming</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="880"/>
+        <location filename="mainwindow.ui" line="903"/>
         <source>&lt;div id=&quot;doc&quot; class=&quot;markdown-body container-fluid comment-inner comment-enabled&quot; data-hard-breaks=&quot;true&quot;&gt;&lt;h1 id=&quot;Tutorial&quot; data-id=&quot;Tutorial&quot; style=&quot;&quot;&gt;&lt;span&gt;Tutorial&lt;/span&gt;&lt;/h1&gt;&lt;ol&gt;
 &lt;li&gt;&lt;span&gt;Connect board to PC with USB.&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span&gt;Change switch to “&lt;/span&gt;&lt;strong&gt;&lt;span&gt;PROG&lt;/span&gt;&lt;/strong&gt;&lt;span&gt;”.&lt;/span&gt;&lt;/li&gt;
@@ -86,77 +86,57 @@
 &lt;/ol&gt;&lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="956"/>
+        <location filename="mainwindow.ui" line="979"/>
         <source>  Serial Settings</source>
         <translation>  Serial Settings</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1037"/>
+        <location filename="mainwindow.ui" line="1069"/>
         <source>  Translation</source>
         <translation>  Translation</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="730"/>
+        <location filename="mainwindow.ui" line="753"/>
         <source>Hex File :</source>
         <translation>Hex File :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="839"/>
+        <location filename="mainwindow.ui" line="412"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="862"/>
         <source>Progress :</source>
         <translation>Progress :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="935"/>
+        <location filename="mainwindow.ui" line="958"/>
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="984"/>
+        <location filename="mainwindow.ui" line="1007"/>
         <source>implicit text :</source>
         <translation>implicit text :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1056"/>
+        <location filename="mainwindow.ui" line="1088"/>
         <source>language :</source>
         <translation>language :</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="147"/>
-        <source>Device is </source>
-        <translation>Device is </translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="149"/>
-        <source>Flash hex size is %1 KB (%2 bytes)</source>
-        <translation>Flash hex size is %1 KB (%2 bytes)</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="153"/>
-        <source>Externel Flash hex size is %1 KB (%2 bytes)</source>
-        <translation>Externel Flash hex size is %1 KB (%2 bytes)</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="157"/>
-        <source>EEPROM hex size is %1 bytes.</source>
-        <translation>EEPROM hex size is %1 bytes.</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="158"/>
-        <source>Estimated time is %1 s.</source>
-        <translation>Estimated time is %1 s.</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="172"/>
+        <location filename="mainwindow.cpp" line="190"/>
         <source>open file</source>
         <translation>open file</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="186"/>
+        <location filename="mainwindow.cpp" line="204"/>
         <source>multi format detect</source>
         <translation>multi format detect</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="187"/>
+        <location filename="mainwindow.cpp" line="205"/>
         <source>There are multi format ready to send,
 Do you want to send all at ones?</source>
         <translation>There are multi format ready to send,
@@ -250,6 +230,34 @@ Do you want to send all at ones?</translation>
         <location filename="asaloader/asaloader/main.cpp" line="105"/>
         <source>Estimated time is %1 s.</source>
         <translation>Estimated time is %1 s.</translation>
+    </message>
+</context>
+<context>
+    <name>serialDataThread</name>
+    <message>
+        <location filename="serialDataThread.cpp" line="48"/>
+        <source>Device is </source>
+        <translation type="unfinished">Device is </translation>
+    </message>
+    <message>
+        <location filename="serialDataThread.cpp" line="50"/>
+        <source>Flash hex size is %1 KB (%2 bytes)</source>
+        <translation type="unfinished">Flash hex size is %1 KB (%2 bytes)</translation>
+    </message>
+    <message>
+        <location filename="serialDataThread.cpp" line="54"/>
+        <source>Externel Flash hex size is %1 KB (%2 bytes)</source>
+        <translation type="unfinished">Externel Flash hex size is %1 KB (%2 bytes)</translation>
+    </message>
+    <message>
+        <location filename="serialDataThread.cpp" line="58"/>
+        <source>EEPROM hex size is %1 bytes.</source>
+        <translation type="unfinished">EEPROM hex size is %1 bytes.</translation>
+    </message>
+    <message>
+        <location filename="serialDataThread.cpp" line="59"/>
+        <source>Estimated time is %1 s.</source>
+        <translation type="unfinished">Estimated time is %1 s.</translation>
     </message>
 </context>
 </TS>

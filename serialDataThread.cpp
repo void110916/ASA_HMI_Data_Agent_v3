@@ -1,4 +1,5 @@
 #include "serialDataThread.h"
+
 #include "asaEncoder.h"
 #include "asadevice.h"
 #include "loader.h"
@@ -7,7 +8,7 @@ void serialDataThread::dataHandling(const QByteArray raws) {
   QString s;
   for (const char ch : raws) {
     if (!decode.put(ch)) {
-      s += ch;
+      if (ch != '\r') s += ch;
       if (decode.isSync(ch)) {
         emit dataWrite("~ACK\n", strlen("~ACK\n"));
         s += u"~ACK\n"_qs;
@@ -29,7 +30,7 @@ void serialDataThread::programming(QString portName, int deviceNum,
   using Loader::Loader;
   typedef Loader::Loader::ProgMode ProgMode;
 
- emit setEnable(false);
+  emit setEnable(false);
   auto serial = new QSerialPort(portName, this);
   serial->setBaudRate(QSerialPort::Baud38400);
   serial->setParity(QSerialPort::NoParity);

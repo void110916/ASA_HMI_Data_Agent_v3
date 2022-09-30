@@ -54,19 +54,20 @@ inline void MainWindow::connectProgrammer() {
 inline void MainWindow::connectTerminal() {
   connect(&thread, SIGNAL(hmiAppend(const QString &)), ui->hmiText,
           SLOT(appendPlainText(const QString &)));
-  connect(&thread, &serialDataThread::portAppend, ui->portTextBrowser,
-          [b = ui->portTextBrowser](const QString &s) {
-            b->moveCursor(QTextCursor::End);
-            b->insertPlainText(s);
-          });
+  connect(
+      &thread, &serialDataThread::portAppend, ui->portText,
+      [b = ui->portText](const QString &s) {
+        b->moveCursor(QTextCursor::End);
+        b->insertPlainText(s);
+      },
+      Qt::QueuedConnection);
   connect(this, SIGNAL(dataHandling(const QByteArray)), &thread,
           SLOT(dataHandling(const QByteArray)));
 }
 inline void MainWindow::disconnectTerminal() {
   disconnect(&thread, SIGNAL(hmiAppend(const QString &)), ui->hmiText,
              SLOT(appendPlainText(const QString &)));
-  disconnect(&thread, &serialDataThread::portAppend, ui->portTextBrowser,
-             nullptr);
+  disconnect(&thread, &serialDataThread::portAppend, ui->portText, nullptr);
   disconnect(this, SIGNAL(dataHandling(const QByteArray)), &thread,
              SLOT(dataHandling(const QByteArray)));
 }
@@ -81,7 +82,9 @@ void MainWindow::on_portButton_clicked() {
     if (serial->isOpen()) {
       ui->portButton->setStyleSheet("color: rgb(115, 210, 22);");
       ui->portButton->setText("On");
-      QObject::connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecv()));
+      ui->portComboBox->setEnabled(false);
+      QObject::connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecv()),
+                       Qt::QueuedConnection);
     } else {
       serialOff();
     }
@@ -91,6 +94,7 @@ void MainWindow::on_portButton_clicked() {
     // serial->disconnect(SIGNAL(readyRead()), this, SLOT(serialRecv()));
     ui->portButton->setStyleSheet("color: rgb(239, 41, 41);");
     ui->portButton->setText("Off");
+    ui->portComboBox->setEnabled(true);
   }
 }
 bool MainWindow::serialOn(const QString &name) {
@@ -112,7 +116,6 @@ bool MainWindow::serialOn(const QString &name) {
 bool MainWindow::serialOff() {
   serial->setDataTerminalReady(false);
   serial->setRequestToSend(false);
-
   serial->clear();
 
   serial->close();
@@ -121,14 +124,7 @@ bool MainWindow::serialOff() {
   return false;
 }
 
-void MainWindow::serialRecv(void) {
-  static ASAEncoder::ASADecode decode;
-  char ch;
-  QString s;
-  static QString sync;
-  // serial->waitForReadyRead(3000);
-  emit dataHandling(serial->readAll());
-}
+void MainWindow::serialRecv(void) { emit dataHandling(serial->readAll()); }
 
 void MainWindow::on_portComboBoxPopupShowing() {
   SerialComboBox *box = qobject_cast<SerialComboBox *>(sender());
@@ -139,8 +135,8 @@ void MainWindow::on_portComboBoxPopupShowing() {
   }
 }
 void MainWindow::portTextAppend(const QString &s) {
-  ui->portTextBrowser->moveCursor(QTextCursor::End);
-  ui->portTextBrowser->insertPlainText(s);
+  ui->portText->moveCursor(QTextCursor::End);
+  ui->portText->insertPlainText(s);
 }
 
 void MainWindow::on_enterbuttom_clicked() {
@@ -149,14 +145,14 @@ void MainWindow::on_enterbuttom_clicked() {
   serial->write(text.toStdString().c_str(), text.size());
   ui->enterLine->clear();
   if (ui->echoCheckBox->isChecked()) {
-    ui->portTextBrowser->moveCursor(QTextCursor::End);
-    ui->portTextBrowser->insertPlainText(u"<< "_qs + text);
+    ui->portText->moveCursor(QTextCursor::End);
+    ui->portText->insertPlainText(u"<< "_qs + text);
   }
 }
 
 void MainWindow::on_enterLine_returnPressed() { on_enterbuttom_clicked(); }
 
-void MainWindow::on_clearButton_clicked() { ui->portTextBrowser->clear(); }
+void MainWindow::on_clearButton_clicked() { ui->portText->clear(); }
 
 void MainWindow::on_langSelect_currentTextChanged(const QString &arg1) {
   QApplication::instance()->removeTranslator(&m_translator);
@@ -219,8 +215,8 @@ void MainWindow::on_hmiSendButton_clicked() {
       if (serial->isOpen()) {
         if (putSync) {
           serial->write("~ACK\n");
-          ui->portTextBrowser->moveCursor(QTextCursor::End);
-          ui->portTextBrowser->insertPlainText(u"~ACK\n"_qs);
+          ui->portText->moveCursor(QTextCursor::End);
+          ui->portText->insertPlainText(u"~ACK\n"_qs);
           putSync = false;
         }
         serial->write(reinterpret_cast<char *>(datas.data()), datas.size());
@@ -248,8 +244,7 @@ void MainWindow::on_tabWidget_currentChanged(int index) {
       if (serial->isOpen()) {
         ui->portButton->setStyleSheet("color: rgb(115, 210, 22);");
         ui->portButton->setText("On");
-        QObject::connect(serial, SIGNAL(readyRead()), this,
-        SLOT(serialRecv()));
+        QObject::connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecv()));
       } else {
         serialOff();
       }
