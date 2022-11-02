@@ -126,7 +126,7 @@
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
             <item>
              <widget class="QGroupBox" name="groupBox">
@@ -381,7 +381,7 @@
               <item>
                <widget class="QPushButton" name="newdataButton">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="text">
                  <string>new data</string>
@@ -438,7 +438,7 @@
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,1">
             <item>
              <widget class="QGroupBox" name="groupBox_4">

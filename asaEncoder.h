@@ -126,7 +126,7 @@ class ASADecode {
   template <typename T>
   string transfirm(vector<uint8_t> data);
   inline string dataTransfirm(HMI_type type, vector<uint8_t> data);
-  inline string getTypeStr(int typeNum);
+  
 
  public:
   // member
@@ -139,10 +139,19 @@ class ASADecode {
 
   bool put(uint8_t buff);
   string get();
+  void putArray(uint8_t ar_type,uint8_t ar_num);
+  void putMatrix(uint8_t mt_type,uint8_t mt_numy,uint8_t mt_numx);
+  void putStruct(string st_fs);
   static bool isSync(char buff);
+  inline string getTypeStr(int typeNum);
 };
 
 class ASAEncode {
+  struct SplitStr{
+    string str;
+    int64_t lastIndex;
+  };
+
  private:
   // member
   bool isError = false;
@@ -175,7 +184,7 @@ class ASAEncode {
               // ":(\\s*{)(?:\\s*[if](?:8|16|32|64)_[0-9]+\\s*:\\s*{[^{}]*}\\s*)+}"s,
               // regex::optimize };
   // function
-  inline uint8_t getTypeNum(string typeStr);
+  // inline uint8_t getTypeNum(string typeStr);
   template <typename T, typename f>
   vector<uint8_t> transfirm(string data, const char* format, uint8_t chklen,
                             f h2be);
@@ -187,13 +196,14 @@ class ASAEncode {
   vector<uint8_t> encodeSt2Pac();
 
  public:
+ 
   // member
   // function
   ASAEncode();
   ~ASAEncode();
 
   static bool isSync(char buff);
-  vector<string> split(string text);
+  static vector<SplitStr> split(string text);
   //   bool put(HMI_format format);
   bool put(string text);
   vector<uint8_t> get();

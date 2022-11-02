@@ -187,7 +187,7 @@ bool ASADecode::put(uint8_t buff) {
 }
 
 string ASADecode::get() {
-  if (!isDone) return "";
+  // if (!isDone) return "";
   string text = "";
   if (pkg_type == PAC_type::AR) {
     text = QString("%1_%2 :\r\n    { %3 }\r\n\r\n")
@@ -216,8 +216,8 @@ string ASADecode::get() {
     while (std::getline(type, d, ',')) {
       array<string, 2> info;
       auto&& at = d.find("_");
-      info[0] = d.substr(0,at);
-      info[1] = d.substr(at+1);
+      info[0] = d.substr(0, at);
+      info[1] = d.substr(at + 1);
       vector<uint8_t> dat;
       auto&& it = make_move_iterator(st_dat.begin());
       string st;
@@ -255,11 +255,40 @@ string ASADecode::get() {
       text += "    :{ "s + st + " }\r\n";
     }
     text += "}\r\n\r\n"s;
-  } else
-    return "";
-  clear();
+  }
+  // clear();
+  isDone = false;
   return text;
 }
+
+
+void ASADecode::putArray(uint8_t ar_type, uint8_t ar_num) {
+  const uint8_t typeSize[] = {1, 2, 4, 8, 1, 2, 4, 8, 4, 8};
+  this->pkg_type=PAC_type::AR;
+  this->ar_type = ar_type;
+  this->ar_num = ar_num;
+  ar_dlen = ar_num * typeSize[ar_type];
+  ar_dat.resize(ar_dlen);
+}
+
+void ASADecode::putMatrix(uint8_t mt_type, uint8_t mt_numy, uint8_t mt_numx) {
+  const uint8_t typeSize[] = {1, 2, 4, 8, 1, 2, 4, 8, 4, 8};
+  this->pkg_type=PAC_type::MT;
+  this->mt_type = mt_type;
+  this->mt_numy = mt_numy;
+  this->mt_numx = mt_numx;
+  mt_dlen = mt_numy * mt_numx * typeSize[ar_type];
+  mt_dat.resize(mt_dlen);
+}
+
+void ASADecode::putStruct(string st_fs) {
+  this->pkg_type=PAC_type::ST;
+  this->st_fs.insert(this->st_fs.begin(),std::move_iterator(st_fs.begin()),std::move_iterator(st_fs.end()));
+  this->st_fs_len=this->st_fs.size();
+  this->st_dat.resize(UINT16_MAX);
+}
+
+
 
 void ASADecode::clear() {
   isProcessing = false;
@@ -286,7 +315,7 @@ void ASADecode::clear() {
   st_dlen = 0;
   st_dat.clear();
 
-  isDone = false;
+  // isDone = false;
 }
 
 template <typename T>
@@ -394,7 +423,7 @@ bool ASAEncode::isSync(char buff) {
   return false;
 }
 
-inline uint8_t ASAEncode::getTypeNum(string typeStr) {
+static inline uint8_t getTypeNum(string typeStr) {
   // auto s=typeStr.find("i8"s)==string::npos;
   if (typeStr.find("i8"s) != string::npos)
     return 0;
@@ -534,19 +563,23 @@ vector<uint8_t> ASAEncode::encodeSt2Pac() {
   return pac;
 }
 
-vector<string> ASAEncode::split(string text) {
+vector<ASAEncode::SplitStr> ASAEncode::split(string text) {
   static regex re(
       "[if](?:8|16|32|64)_[0-9]+(?:x[0-9]+)?\\s*(?:,\\s*[if](?:8|16|32|64)_[0-"
       "9]+\\s*)*:\\s*\\{\\s*(?:\\{[^\\{\\}]+\\}\\s*|[^\\{\\}]+\\s*)+\\}",
       regex::ECMAScript | regex::optimize);
-  vector<string> ret;
+  vector<ASAEncode::SplitStr> ret;
   smatch matchs;
+  int pos = 0;
   //, std::regex_constants::match_any
   while (std::regex_search(
       text, matchs, re,
       std::regex_constants::match_any | std::regex_constants::match_not_null)) {
     // if (match.matched)
-    ret.push_back(matchs.str());
+
+    ret.push_back(ASAEncode::SplitStr{
+        matchs.str(), matchs.position() + matchs.length() + pos});
+    pos = matchs.length();
     text = matchs.suffix();
   }
   return ret;

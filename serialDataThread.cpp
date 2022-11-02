@@ -24,13 +24,29 @@ void serialDataThread::dataHandling(const QByteArray raws) {
   }
   emit portAppend(s);
 }
+
+void serialDataThread::dataSend(const std::string str) {
+  ASAEncoder::ASAEncode encode;
+
+  if (encode.put(str)) {
+    auto datas = encode.get();
+    if (putSync) {
+      emit dataWrite("~ACK\n", strlen("~ACK\n"));
+      emit portAppend(u"~ACK\n"_qs);
+      putSync = false;
+    }
+    emit dataWrite(reinterpret_cast<char *>(datas.data()), datas.size());
+  }
+  
+}
+
 void serialDataThread::programming(QString portName, int deviceNum,
                                    QString hexFile) {
   using Loader::asa_dev_list;
   using Loader::Loader;
   typedef Loader::Loader::ProgMode ProgMode;
 
-  emit setEnable(false);
+  // emit setEnable(false);
   auto serial = new QSerialPort(portName, this);
   serial->setBaudRate(QSerialPort::Baud38400);
   serial->setParity(QSerialPort::NoParity);
@@ -73,5 +89,5 @@ void serialDataThread::programming(QString portName, int deviceNum,
 
   serial->close();
   delete serial;
-  setEnable(true);
+  emit setEnable(true);
 }

@@ -8,10 +8,11 @@ class serialDataThread : public QThread {
   Q_OBJECT
 
  public:
-  bool isDone = false;
+  // bool isDone = false;
   bool putSync = false;
   QString sBuffer;
   QString hmiBuffer;
+  // ASAEncoder::ASAEncode encode;
   serialDataThread(QObject* parent = nullptr) : QThread(parent) {}
   //   void connectSignal(QWidget *parent = nullptr);
  signals:
@@ -23,6 +24,7 @@ class serialDataThread : public QThread {
   void setEnable(bool enable);
  public slots:
   void dataHandling(const QByteArray raws);
+  void dataSend(const std::string str);
   void programming(QString portName, int deviceNum, QString hexFile);
 };
 QT_END_NAMESPACE

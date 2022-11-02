@@ -2,10 +2,12 @@
 
 #include <QApplication>
 #include <QFileDialog>
+#include <iostream>
 
 #include "./ui_mainwindow.h"
 #include "asaEncoder.h"
 #include "asadevice.h"
+#include "data_create.h"
 #include "loader.h"
 using namespace std::string_literals;
 MainWindow::MainWindow(QWidget *parent)
@@ -37,23 +39,28 @@ MainWindow::MainWindow(QWidget *parent)
   thread.start();
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+  delete ui;
+  delete serial;
+}
 
 inline void MainWindow::connectProgrammer() {
   connect(&thread, SIGNAL(progress(int)), ui->progressBar, SLOT(setValue(int)));
   connect(&thread, SIGNAL(setInfo(const QString &)), ui->loaderInfo,
           SLOT(setText(const QString &)));
-  connect(&thread, SIGNAL(serialDataThread::setEnable(bool)), ui->programButton,
-          SLOT(QPushButton::setEnable(bool)));
+  connect(&thread, SIGNAL(setEnable(bool)), ui->programButton,
+          SLOT(setEnabled(bool)));
+  connect(&thread, SIGNAL(setEnable(bool)), ui->portComboBox2,
+          SLOT(setEnabled(bool)));
 
-  connect(&thread, SIGNAL(dataWrite(const char *, qint64)), serial,
-          SLOT(write(const char *, qint64)));
+  connect(&thread, &serialDataThread::dataWrite, serial,
+          [port = serial](const char *s, qint64 len) { port->write(s, len); });
   connect(this, SIGNAL(programming(QString, int, QString)), &thread,
           SLOT(programming(QString, int, QString)));
 }
 inline void MainWindow::connectTerminal() {
   connect(&thread, SIGNAL(hmiAppend(const QString &)), ui->hmiText,
-          SLOT(appendPlainText(const QString &)));
+          SLOT(appendPlainText(const QString &)), Qt::QueuedConnection);  //
   connect(
       &thread, &serialDataThread::portAppend, ui->portText,
       [b = ui->portText](const QString &s) {
@@ -63,13 +70,16 @@ inline void MainWindow::connectTerminal() {
       Qt::QueuedConnection);
   connect(this, SIGNAL(dataHandling(const QByteArray)), &thread,
           SLOT(dataHandling(const QByteArray)));
+  connect(this, SIGNAL(dataSend(const std::string)), &thread,
+          SLOT(dataSend(const std::string)));
 }
 inline void MainWindow::disconnectTerminal() {
-  disconnect(&thread, SIGNAL(hmiAppend(const QString &)), ui->hmiText,
-             SLOT(appendPlainText(const QString &)));
+  disconnect(&thread, SIGNAL(hmiAppend(const QString &)), ui->hmiText, nullptr);
   disconnect(&thread, &serialDataThread::portAppend, ui->portText, nullptr);
   disconnect(this, SIGNAL(dataHandling(const QByteArray)), &thread,
              SLOT(dataHandling(const QByteArray)));
+  disconnect(this, SIGNAL(dataSend(const std::string)), &thread,
+             SLOT(dataSend(const std::string)));
 }
 void MainWindow::closeEvent(QCloseEvent *event) {
   QMainWindow::closeEvent(event);
@@ -168,7 +178,8 @@ void MainWindow::on_programButton_clicked() {
   using Loader::Loader;
   typedef Loader::Loader::ProgMode ProgMode;
 
-  // ui->programButton->setEnabled(false);
+  ui->programButton->setEnabled(false);
+  ui->portComboBox2->setEnabled(false);
   if (!ui->hexFile->text().isEmpty() &&
       !ui->portComboBox2->currentText().isEmpty()) {
     auto &&portName = ui->portComboBox2->currentText();
@@ -186,12 +197,18 @@ void MainWindow::on_fileBrowseButton_clicked() {
   ui->hexFile->setText(file);
 }
 
-void MainWindow::on_newdataButton_clicked() {}
+void MainWindow::on_newdataButton_clicked() {
+  DataCreate data_create(this);
+  if (data_create.exec() == QDialog::Accepted) {
+    auto s = data_create.getFormat();
+    ui->hmiText->appendPlainText(QString::fromStdString(s));
+  }
+}
 
 void MainWindow::on_hmiSendButton_clicked() {
+  auto cursorIdx = ui->hmiText->textCursor().position();
   std::string text = ui->hmiText->toPlainText().toStdString();
-  ASAEncoder::ASAEncode encode;
-  auto matchs = encode.split(text);
+  auto matchs = ASAEncoder::ASAEncode::split(text);
   int num2send = 0;
   if (matchs.size() > 1) {
     int ret = QMessageBox::question(
@@ -209,23 +226,26 @@ void MainWindow::on_hmiSendButton_clicked() {
   } else {
     num2send = 1;
   }
-  for (int i = 0; i < num2send; i++) {
-    if (encode.put(matchs[i])) {
-      auto datas = encode.get();
-      if (serial->isOpen()) {
-        if (putSync) {
-          serial->write("~ACK\n");
-          ui->portText->moveCursor(QTextCursor::End);
-          ui->portText->insertPlainText(u"~ACK\n"_qs);
-          putSync = false;
-        }
-        serial->write(reinterpret_cast<char *>(datas.data()), datas.size());
-      }
+  if (serial->isOpen())
+    for (int i = 0; i < num2send; i++) {
+      emit dataSend(matchs[i].str);
     }
-  }
-  std::string s;
-  for (int i = num2send; i < matchs.size(); i++) s += matchs[i];
-  ui->hmiText->setPlainText(QString::fromStdString(s));
+  // auto a=ui->hmiText->find(u"i16_5"_qs,QTextDocument::FindFlags::fromInt(0));
+  // auto cur=ui->hmiText->textCursor();
+  // cur.removeSelectedText();
+  // ui->hmiText->setTextCursor(cur);
+  // std::string s;
+  // for (int i = num2send; i < matchs.size(); i++) s += matchs[i];
+  auto cursor = ui->hmiText->textCursor();
+  cursor.setPosition(0);
+  // auto pos=matchs.position();
+  cursor.setPosition(matchs[num2send].lastIndex, QTextCursor::KeepAnchor);
+  // cursor.select(QTextCursor::LineUnderCursor);
+  // auto cursor.selectedText();
+  cursor.removeSelectedText();
+
+  // ui->hmiText->insertPlainText(QString::fromStdString(s));
+  ui->hmiText->setTextCursor(cursor);
 }
 
 void MainWindow::on_hmiClearButton_clicked() {
@@ -250,7 +270,8 @@ void MainWindow::on_tabWidget_currentChanged(int index) {
       }
     }
   } else {
-    if (serial != NULL) {
+    // std::cout<<serial<<std::endl;
+    if (serial->isOpen()) {
       portIsOn = serial->isOpen();
       QObject::disconnect(serial, SIGNAL(readyRead()), this,
                           SLOT(serialRecv()));

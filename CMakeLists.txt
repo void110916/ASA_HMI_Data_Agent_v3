@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(HMI_agent VERSION 0.1 LANGUAGES CXX)
+project(HMI_agent LANGUAGES CXX)
 
 # ==== add compiler setting flag ================================== #
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -54,6 +54,9 @@ set(PROJECT_SOURCES
         asaEncoder.h
         serialDataThread.cpp
         serialDataThread.h
+        data_create.cpp
+        data_create.h
+        data_create.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -50,6 +50,7 @@ class MainWindow : public QMainWindow {
  signals:
   void programming(QString portName, int deviceNum, QString hexFile);
   void dataHandling(const QByteArray raws);
+  void dataSend(const std::string str);
   void exited();
 
  private:
