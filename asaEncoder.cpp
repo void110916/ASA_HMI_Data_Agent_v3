@@ -352,32 +352,32 @@ inline string ASADecode::dataTransfirm(HMI_type type, vector<uint8_t> data) {
     return "";
 }
 
-inline string ASADecode::getTypeStr(int typeNum) {
-  if (typeNum == 0)
-    return "i8"s;
-  else if (typeNum == 1)
-    return "i16"s;
-  else if (typeNum == 2)
-    return "i32"s;
-  else if (typeNum == 3)
-    return "i64"s;
-  else if (typeNum == 4)
-    return "ui8"s;
-  else if (typeNum == 5)
-    return "ui16"s;
-  else if (typeNum == 6)
-    return "ui32"s;
-  else if (typeNum == 7)
-    return "ui64"s;
-  else if (typeNum == 8)
-    return "f32"s;
-  else if (typeNum == 9)
-    return "f64"s;
-  else if (typeNum == 15)
-    return "s"s;
-  else
-    return ""s;
-}
+// inline string ASADecode::getTypeStr(int typeNum) {
+//   if (typeNum == 0)
+//     return "i8"s;
+//   else if (typeNum == 1)
+//     return "i16"s;
+//   else if (typeNum == 2)
+//     return "i32"s;
+//   else if (typeNum == 3)
+//     return "i64"s;
+//   else if (typeNum == 4)
+//     return "ui8"s;
+//   else if (typeNum == 5)
+//     return "ui16"s;
+//   else if (typeNum == 6)
+//     return "ui32"s;
+//   else if (typeNum == 7)
+//     return "ui64"s;
+//   else if (typeNum == 8)
+//     return "f32"s;
+//   else if (typeNum == 9)
+//     return "f64"s;
+//   else if (typeNum == 15)
+//     return "s"s;
+//   else
+//     return ""s;
+// }
 
 // ASAEncode
 ASAEncode::ASAEncode()
