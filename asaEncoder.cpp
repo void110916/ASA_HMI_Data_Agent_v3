@@ -213,45 +213,51 @@ string ASADecode::get() {
     auto type = std::istringstream(text);
     text = regex_replace(text, regex(","), " , ") + " :\r\n{\r\n";
     string d;
+    auto&& it = make_move_iterator(st_dat.begin());
     while (std::getline(type, d, ',')) {
       array<string, 2> info;
       auto&& at = d.find("_");
       info[0] = d.substr(0, at);
       info[1] = d.substr(at + 1);
       vector<uint8_t> dat;
-      auto&& it = make_move_iterator(st_dat.begin());
+
       string st;
+      HMI_type HMItype;
+      size_t len;
       if (info[0] == "ui8"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(uint8_t));
-        st = dataTransfirm(HMI_type::UI8, dat);
+        len = std::stoi(info[1]) * sizeof(uint8_t);
+        HMItype = HMI_type::UI8;
       } else if (info[0] == "ui16"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(uint16_t));
-        st = dataTransfirm(HMI_type::UI16, dat);
+        len = std::stoi(info[1]) * sizeof(uint16_t);
+        HMItype = HMI_type::UI16;
       } else if (info[0] == "ui32"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(uint32_t));
-        st = dataTransfirm(HMI_type::UI32, dat);
+        len = std::stoi(info[1]) * sizeof(uint32_t);
+        HMItype = HMI_type::UI32;
       } else if (info[0] == "ui64"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(uint64_t));
-        st = dataTransfirm(HMI_type::UI64, dat);
+        len = std::stoi(info[1]) * sizeof(uint64_t);
+        HMItype = HMI_type::UI64;
       } else if (info[0] == "i8"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(int8_t));
-        st = dataTransfirm(HMI_type::I8, dat);
+        len = std::stoi(info[1]) * sizeof(int8_t);
+        HMItype = HMI_type::I8;
       } else if (info[0] == "i16"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(int16_t));
-        st = dataTransfirm(HMI_type::I16, dat);
+        len = std::stoi(info[1]) * sizeof(int16_t);
+        HMItype = HMI_type::I16;
       } else if (info[0] == "i32"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(int32_t));
-        st = dataTransfirm(HMI_type::I32, dat);
+        len = std::stoi(info[1]) * sizeof(int32_t);
+        HMItype = HMI_type::I32;
       } else if (info[0] == "i64"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(int64_t));
-        st = dataTransfirm(HMI_type::I64, dat);
+        len = std::stoi(info[1]) * sizeof(int64_t);
+        HMItype = HMI_type::I64;
       } else if (info[0] == "f32"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(float_t));
-        st = dataTransfirm(HMI_type::F32, dat);
+        len = std::stoi(info[1]) * sizeof(float_t);
+        HMItype = HMI_type::F32;
       } else if (info[0] == "f64"s) {
-        dat.insert(dat.begin(), it, it + std::stoi(info[1]) * sizeof(double_t));
-        st = dataTransfirm(HMI_type::F64, dat);
+        len = std::stoi(info[1]) * sizeof(double_t);
+        HMItype = HMI_type::F64;
       }
+      dat.insert(dat.begin(), it, it + len);
+      st = dataTransfirm(HMItype, dat);
+      it += len;
       text += "    :{ "s + st + " }\r\n";
     }
     text += "}\r\n\r\n"s;
@@ -261,10 +267,9 @@ string ASADecode::get() {
   return text;
 }
 
-
 void ASADecode::putArray(uint8_t ar_type, uint8_t ar_num) {
   const uint8_t typeSize[] = {1, 2, 4, 8, 1, 2, 4, 8, 4, 8};
-  this->pkg_type=PAC_type::AR;
+  this->pkg_type = PAC_type::AR;
   this->ar_type = ar_type;
   this->ar_num = ar_num;
   ar_dlen = ar_num * typeSize[ar_type];
@@ -273,7 +278,7 @@ void ASADecode::putArray(uint8_t ar_type, uint8_t ar_num) {
 
 void ASADecode::putMatrix(uint8_t mt_type, uint8_t mt_numy, uint8_t mt_numx) {
   const uint8_t typeSize[] = {1, 2, 4, 8, 1, 2, 4, 8, 4, 8};
-  this->pkg_type=PAC_type::MT;
+  this->pkg_type = PAC_type::MT;
   this->mt_type = mt_type;
   this->mt_numy = mt_numy;
   this->mt_numx = mt_numx;
@@ -282,13 +287,12 @@ void ASADecode::putMatrix(uint8_t mt_type, uint8_t mt_numy, uint8_t mt_numx) {
 }
 
 void ASADecode::putStruct(string st_fs) {
-  this->pkg_type=PAC_type::ST;
-  this->st_fs.insert(this->st_fs.begin(),std::move_iterator(st_fs.begin()),std::move_iterator(st_fs.end()));
-  this->st_fs_len=this->st_fs.size();
+  this->pkg_type = PAC_type::ST;
+  this->st_fs.insert(this->st_fs.begin(), std::move_iterator(st_fs.begin()),
+                     std::move_iterator(st_fs.end()));
+  this->st_fs_len = this->st_fs.size();
   this->st_dat.resize(UINT16_MAX);
 }
-
-
 
 void ASADecode::clear() {
   isProcessing = false;
