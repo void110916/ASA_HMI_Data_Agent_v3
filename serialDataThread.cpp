@@ -8,7 +8,8 @@ void serialDataThread::dataHandling(const QByteArray raws) {
   QString s;
   for (const char ch : raws) {
     if (!decode.put(ch)) {
-      if (ch != '\r') s += ch;
+      if (ch == '\r') continue;
+      s += ch;
       if (decode.isSync(ch)) {
         emit dataWrite("~ACK\n", strlen("~ACK\n"));
         s += u"~ACK\n"_qs;
